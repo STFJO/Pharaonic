@@ -49,9 +49,12 @@ public class NPC : MonoBehaviour {
 		foreach (IWorkplace workplace in workplaceListe) {
 			if(workplace.GetMaxPlätze() > workplace.GetPlätzeBelegt()){
 				job = workplace.GetType();
+				//Koordinaten des Arbeitsplatzes!!
 				arbeitsplatz = ((IBuilding)job).GetTransform();
+				targetPosition = arbeitsplatz;
 				jobGefunden=true;
 				jobIdleTrigger = false;
+				//arbeiter bei arbeitgeber anmelden:
 				workplace.MeldeArbeiter(this);
 				break;
 			}
