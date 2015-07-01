@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 
 public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
@@ -24,13 +25,13 @@ public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
 	//Gibt belegte Plätze zurück
 	public int GetPlätzeBelegt()
 	{
-		return gemeldetePlätze.Count;
+		return gemeldeteArbeiter.Count();
 	}
 
 	//Verändert die maximal möglich belegbaren Plätze
 	public void SetMaxPlätze(int neuerMaxWert)
 	{
-		altMaxPlätze = maxPlätze;
+		int altMaxPlätze = maxPlätze;
 		maxPlätze = neuerMaxWert;
 		for(int i = altMaxPlätze - maxPlätze, i>0, i--)
 		{
@@ -40,23 +41,23 @@ public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
 	}
 
 
-	private GiveRessourceToPlayer(NPC Ziel, RessourceType Ressource)
+	public void GiveRessourceToPlayer(NPC Ziel, RessourceType Ressource)
 	{
 		while(Ziel.AddTragend(10, Ressource) && gemeldeteArbeiter.Contains(Ziel) && Ziel.gameObject.GetComponent<Healthsystem>)
 		{
 			ressourcenVorrat = ressourcenVorrat - 10;
-			StartCoroutine(Delay (delayForGivingRessources);
-			               }
+			StartCoroutine(Delay (delayForGivingRessources));
+		}
 			               
-			               Ziel.SetTargetPosition(DBCharsAndBuildings.FindeZielGebäude(Lagerhaus, Ziel.transform);
+		Ziel.SetTargetPosition(DBCharsAndBuildings.FindeZielGebäude(Gebäudetyp.Lager, Ziel.transform);
 			               
-		}	               
-	}
+	}	               
+	
 
 	//Its so obvious
 	public Gebäudetyp GetTyp()
 	{
-		return art;
+		return gebäudeart;
 	}
 
 	

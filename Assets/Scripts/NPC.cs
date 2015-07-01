@@ -64,7 +64,7 @@ public class NPC : MonoBehaviour, INPC {
 		return jobGefunden;
 	}
 
-	void Kuendigen(){
+	public void Kuendigen(){
 		jobIdleTrigger = true;
 		job = Gebäudetyp.None;
 		arbeitsplatz = null;
