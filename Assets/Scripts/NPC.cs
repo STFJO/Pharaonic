@@ -52,6 +52,7 @@ public class NPC : MonoBehaviour, INPC {
 				//Koordinaten des Arbeitsplatzes!!
 				arbeitsplatz = ((IBuilding)workplace).GetTransform();
 				targetPosition = arbeitsplatz.position;
+				//TODO navMesh Movement mit targetPosition
 				jobGefunden=true;
 				jobIdleTrigger = false;
 				//arbeiter bei arbeitgeber anmelden:
@@ -81,8 +82,10 @@ public class NPC : MonoBehaviour, INPC {
 
 	}
 
-	//TODO targetPosition setzung regeln und NPC zu Ziel bewegen lassen
-
+	//TODO targetPosition setzung regeln 
+	public void SetTargetPosition(Vector3 newTargetPosition){
+		targetPosition = newTargetPosition;
+	}
 
 
 
@@ -105,13 +108,13 @@ public class NPC : MonoBehaviour, INPC {
 	//einheiten werden in zehner schritten übergeben
 	public bool AddRessourceTragend(int anzahl, RessourceType ressource){
 		bool erfolg = false;
-		if (ressource == Holz) {
+		if (ressource == RessourceType.Holz) {
 			erfolg = SetHolzTragend(anzahl);
 		}
-		if (ressource == Stein) {
+		if (ressource == RessourceType.Stein) {
 			erfolg = SetSteinTragend(anzahl);
 		}
-		if (ressource == Nahrung) {
+		if (ressource == RessourceType.Nahrung) {
 			erfolg = SetNahrungTragend(anzahl);
 		}
 		return erfolg;

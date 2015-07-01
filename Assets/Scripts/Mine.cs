@@ -12,7 +12,7 @@ public class Mine : MonoBehaviour, IBuilding
 	{
 		other.gameObject.GetComponent <GiveRessourceToPlayer>();	
 	}
-	Gebäudetyp IBuilding.GetType ()
+	Gebäudetyp IBuilding.GetBuildingType ()
 	{
 		throw new System.NotImplementedException ();
 	}
