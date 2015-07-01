@@ -60,13 +60,13 @@ public class NPC : MonoBehaviour {
 
 	}
 
-	public int GetHolzAnzahl(){
+	public int GetHolzTragend(){
 		return holzTragend;
 	}
-	public int GetFischAnzahl(){
+	public int GetFischTragend(){
 		return fischTragend;
 	}
-	public int GetWeizenAnzahl(){
+	public int GetWeizenTragend(){
 		return weizenTragend;
 	}
 	public bool SetHolzTragend(int holzNeuDazu){
