@@ -8,16 +8,27 @@ public class NPC : MonoBehaviour {
 	private Gebäudetyp job;
 	private Coroutine jobIdle;
 	private Transform arbeitsplatz;
+	[SerializeField]
+	private static int citizenCounter = 0;
+	private int citizenID;
 	private bool jobIdleTrigger = true;
 	[SerializeField]
 	private float jobSuchZyklusZeit = 5;
-	// Use this for initialization
-	void Start () {
+
+
+	void Start (Vector3 spawnPoint) {
+		//object erzeugen
+		Instantiate (this, spawnPoint, 0f);
+		//nächst besten freien job suchen/nehmen
 		bool jobSearchResult = Jobsuche ();
 		if (!jobSearchResult) {
 			StartCoroutine(JobDelay(jobSuchZyklusZeit));
 		}
-		//bei DBCharsAndBuildings anmelden!!!
+		//bevölkerungszähler erhöhen und NPC nummerieren
+		citizenCounter ++;
+		citizenID = citizenCounter;
+		//bei DBCharsAndBuildings anmelden:
+		DBCharsAndBuildings.AddNpc (this);
 	}
 
 	bool Jobsuche(){

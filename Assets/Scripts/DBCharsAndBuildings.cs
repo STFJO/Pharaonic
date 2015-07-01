@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class DBCharsAndBuildings {
 
@@ -32,7 +33,7 @@ public class DBCharsAndBuildings {
 
 
 	//Findet alle Gebäude vom gesuchten Datentyp und speichert sie in einer Liste, die sie dann ausgibt
-	private List FindeGebäude(Gebäudetyp Typ)
+	private List<IBuilding> FindeGebäude(Gebäudetyp Typ)
 	{
 		List<IBuilding> temp = new List<IBuilding> ();
 		foreach (IBuilding building in buildings) {
@@ -77,7 +78,7 @@ public class DBCharsAndBuildings {
 		buildings.Add(gebäude);
 	}
 
-	public void AddNpc(INpcs Npc)
+	public void AddNpc(INpc Npc)
 	{
 		npcs.Add (Npc);
 	}
@@ -89,21 +90,21 @@ public class DBCharsAndBuildings {
 
 
 	//Get und so
-	public List GetWorkplaces()
+	public List<IWorkplace> GetWorkplaces()
 	{
 		List<IWorkplaces> workplaces = new List<IWorkplace> (arbeitsplätze);
 		return workplaces;
 	}
 
-	public List GetBuildings()
+	public List<IBuilding> GetBuildings()
 	{
 		List<IBuildings> gebäude = new List<IBuildings> (buildings);
 		return gebäude;
 	}
 
-	public List GetNpcs()
+	public List<INpc> GetNpcs()
 	{
-		List<INpcs> Characters = new List<INpcs> (npcs);
+		List<INpc> Characters = new List<INpcs> (npcs);
 		return Characters;
 	}
 
