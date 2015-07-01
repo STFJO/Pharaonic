@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IArbeitsplatz : MonoBehaviour {
+public class Tempel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
