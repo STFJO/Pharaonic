@@ -65,6 +65,8 @@ public class NPC : MonoBehaviour {
 
 	void Kuendigen(){
 		jobIdleTrigger = true;
+		job = null;
+		arbeitsplatz = null;
 		bool jobSearchResult = Jobsuche ();
 		if (!jobSearchResult) {
 			StartCoroutine(JobDelay(jobSuchZyklusZeit));
