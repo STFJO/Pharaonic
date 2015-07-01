@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Collections;
 
 
-public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
+public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 {
+
 	[SerializeField]
 	protected Gebäudetyp gebäudeart;
 	[SerializeField]
@@ -25,7 +26,7 @@ public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
 	//Gibt belegte Plätze zurück
 	public int GetPlätzeBelegt()
 	{
-		return gemeldeteArbeiter.Count();
+		return gemeldeteArbeiter.Count;
 	}
 
 	//Verändert die maximal möglich belegbaren Plätze
@@ -43,13 +44,13 @@ public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
 
 	public void GiveRessourceToPlayer(NPC Ziel, RessourceType Ressource)
 	{
-		while(Ziel.AddTragend(10, Ressource) && gemeldeteArbeiter.Contains(Ziel) && Ziel.gameObject.GetComponent<Healthsystem>)
+		while(Ziel.AddTragend(10, Ressource) && gemeldeteArbeiter.Contains(Ziel))
 		{
 			ressourcenVorrat = ressourcenVorrat - 10;
 			StartCoroutine(Delay (delayForGivingRessources));
 		}
 			               
-		Ziel.SetTargetPosition(DBCharsAndBuildings.FindeZielGebäude(Gebäudetyp.Lager, Ziel.transform));
+		Ziel.SetTargetPosition((DBCharsAndBuildings.GetInstance().FindeZielGebäude(Gebäudetyp.Lager, Ziel.transform)).GetTransform().position);
 			               
 	}	               
 	
@@ -72,4 +73,40 @@ public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
 	{
 		yield return new WaitForSeconds (time);
 	}
+
+	public void GiveRessourceToPlayer (INPC Ziel)
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public Gebäudetyp GetBuildingType ()
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public List<NPC> GemeldeteArbeiter ()
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public int GetMaxPlätze ()
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public void SetPlätzeBelegt (int neuerStand)
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public void GiveRessourceToPlayer ()
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public Gebäudetyp GetJobType ()
+	{
+		throw new System.NotImplementedException ();
+	}
+
 }

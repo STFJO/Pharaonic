@@ -1,15 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-public class Weizenfarm : Worklplace
+public class Weizenfarm : Workplace
 {
-	super.Gebäudeart = Weizenfarm; 
+	void Start(){
+		base.gebäudeart = Gebäudetyp.Weizenfarm; 
+	}
 	//Gibt dem Npc in einem bestimmten Zeitabstand Ressourcen wenn er sich in unmittelbarer Nähe befindet
 	void OnTriggerEnter (Collider other) 
 	{
-		NPC isIt = other.gameObject.GetComponent <NPC>;
+		NPC isIt = other.gameObject.GetComponent <NPC>();
 		if (isIt != null) {
-			GiveRessourceToPlayer (isIt, RessourceType Nahrung);
+			GiveRessourceToPlayer (isIt, RessourceType.Nahrung);
 		}
 	}
 	
