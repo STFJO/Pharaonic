@@ -65,7 +65,7 @@ public class NPC : MonoBehaviour, INPC {
 
 	void Kuendigen(){
 		jobIdleTrigger = true;
-		job = null;
+		job = Gebäudetyp.None;
 		arbeitsplatz = null;
 		bool jobSearchResult = Jobsuche ();
 		if (!jobSearchResult) {
