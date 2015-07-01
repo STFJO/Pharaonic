@@ -4,21 +4,29 @@ using System.Collections;
 
 public class NPC : MonoBehaviour {
 
+	//Art und Koordinaten seines Arbeitsplatzes
 	[SerializeField]
 	private Gebäudetyp job;
-	private Coroutine jobIdle;
 	private Transform arbeitsplatz;
+	//Nummerierung der NPCs
 	[SerializeField]
 	private static int citizenCounter = 0;
 	private int citizenID;
+	//Jobsuche
+	private Coroutine jobIdle;
 	private bool jobIdleTrigger = true;
 	[SerializeField]
 	private float jobSuchZyklusZeit = 5;
+	//Ressourcen Verwaltung innerhalb des NPCs
 	private int holzTragend = 0;
 	private int fischTragend = 0;
 	private int weizenTragend = 0;
 	[SerializeField]
 	private int kapazitaet = 250;
+	private int trageStatus = 0;
+	//NPC versuch immer den Target Vector zu erreichen
+	[SerializeField]
+	private Vector3 targetPosition = 0;
 
 
 	void Start (Vector3 spawnPoint) {
@@ -69,26 +77,30 @@ public class NPC : MonoBehaviour {
 	public int GetWeizenTragend(){
 		return weizenTragend;
 	}
+	//einheiten werden in zehner schritten übergeben
 	public bool SetHolzTragend(int holzNeuDazu){
 		bool erfolg = false;
-		if ((holzTragend + fischTragend + weizenTragend + holzNeuDazu) <= kapazitaet) {
+		if ((trageStatus + holzNeuDazu) <= kapazitaet && (trageStatus + holzNeuDazu) >= 0) {
 			holzTragend += holzNeuDazu;
+			trageStatus += holzNeuDazu;
 			erfolg = true;
 		}
 		return erfolg;
 	}
 	public bool SetFischTragend(int fischNeuDazu){
 		bool erfolg = false;
-		if ((holzTragend + fischTragend + weizenTragend + fischNeuDazu) <= kapazitaet) {
+		if ((trageStatus + fischNeuDazu) <= kapazitaet && (trageStatus + fischNeuDazu) >= 0) {
 			fischTragend += fischNeuDazu;
+			trageStatus += fischNeuDazu;
 			erfolg = true;
 		}
 		return erfolg;
 	}
-	public bool SetHolzTragend(int weizenNeuDazu){
+	public bool SetWeizenTragend(int weizenNeuDazu){
 		bool erfolg = false;
-		if ((holzTragend + fischTragend + weizenTragend + weizenNeuDazu) <= kapazitaet) {
+		if ((trageStatus + weizenNeuDazu) <= kapazitaet && (trageStatus + weizenNeuDazu) >= 0) {
 			weizenTragend += weizenNeuDazu;
+			trageStatus += weizenNeuDazu;
 			erfolg = true;
 		}
 		return erfolg;

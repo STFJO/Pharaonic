@@ -55,7 +55,7 @@ public class DBCharsAndBuildings {
 
 
 
-	/*Gibt einem Npc das gewünschte Gebäude mit der kürzesten Entfernung zurück
+	//Gibt einem Npc das gewünschte Gebäude mit der kürzesten Entfernung zurück
 	public IBuilding FindeZielGebäude(Gebäudetyp Typus, Transform NpcPosition){
 		int index = 0;
 		float distance = float.PositiveInfinity;
@@ -70,7 +70,7 @@ public class DBCharsAndBuildings {
 
 		return mögliche [index];
 	}
-*/
+
 
 	//Selbsterklärend
 	public void AddGebäude(IBuilding gebäude)
