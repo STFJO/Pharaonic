@@ -19,6 +19,7 @@ public class NPC : MonoBehaviour, INPC {
 	private float jobSuchZyklusZeit = 5;
 	//Ressourcen Verwaltung innerhalb des NPCs
 	private int holzTragend = 0;
+	private int steinTragend = 0;
 	private int fischTragend = 0;
 	private int weizenTragend = 0;
 	[SerializeField]
@@ -84,6 +85,9 @@ public class NPC : MonoBehaviour, INPC {
 	public int GetHolzTragend(){
 		return holzTragend;
 	}
+	public int GetSteinTragend(){
+		return steinTragend;
+	}
 	public int GetFischTragend(){
 		return fischTragend;
 	}
@@ -96,6 +100,15 @@ public class NPC : MonoBehaviour, INPC {
 		if ((trageStatus + holzNeuDazu) <= kapazitaet && (trageStatus + holzNeuDazu) >= 0) {
 			holzTragend += holzNeuDazu;
 			trageStatus += holzNeuDazu;
+			erfolg = true;
+		}
+		return erfolg;
+	}
+	public bool SetSteinTragend(int steinNeuDazu){
+		bool erfolg = false;
+		if ((trageStatus + steinNeuDazu) <= kapazitaet && (trageStatus + steinNeuDazu) >= 0) {
+			steinTragend += steinNeuDazu;
+			trageStatus += steinNeuDazu;
 			erfolg = true;
 		}
 		return erfolg;
