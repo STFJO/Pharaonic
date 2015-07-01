@@ -14,11 +14,14 @@ public class NPC : MonoBehaviour {
 	private bool jobIdleTrigger = true;
 	[SerializeField]
 	private float jobSuchZyklusZeit = 5;
+	private int holzTragend = 0;
+	private int fischTragend = 0;
+	private int weizenTragend = 0;
+	[SerializeField]
+	private int kapazitaet = 250;
 
 
 	void Start (Vector3 spawnPoint) {
-		//object erzeugen
-		Instantiate (this, spawnPoint, 0f);
 		//nächst besten freien job suchen/nehmen
 		bool jobSearchResult = Jobsuche ();
 		if (!jobSearchResult) {
@@ -41,7 +44,7 @@ public class NPC : MonoBehaviour {
 				arbeitsplatz = ((IBuilding)job).GetTransform();
 				jobGefunden=true;
 				jobIdleTrigger = false;
-				workplace.SetPlätzeBelegt(workplace.GetPlätzeBelegt()++);
+				workplace.MeldeArbeiter(this);
 				break;
 			}
 		}
@@ -55,6 +58,40 @@ public class NPC : MonoBehaviour {
 			Jobsuche();
 		}
 
+	}
+
+	public int GetHolzAnzahl(){
+		return holzTragend;
+	}
+	public int GetFischAnzahl(){
+		return fischTragend;
+	}
+	public int GetWeizenAnzahl(){
+		return weizenTragend;
+	}
+	public bool SetHolzTragend(int holzNeuDazu){
+		bool erfolg = false;
+		if ((holzTragend + fischTragend + weizenTragend + holzNeuDazu) <= kapazitaet) {
+			holzTragend += holzNeuDazu;
+			erfolg = true;
+		}
+		return erfolg;
+	}
+	public bool SetFischTragend(int fischNeuDazu){
+		bool erfolg = false;
+		if ((holzTragend + fischTragend + weizenTragend + fischNeuDazu) <= kapazitaet) {
+			fischTragend += fischNeuDazu;
+			erfolg = true;
+		}
+		return erfolg;
+	}
+	public bool SetHolzTragend(int weizenNeuDazu){
+		bool erfolg = false;
+		if ((holzTragend + fischTragend + weizenTragend + weizenNeuDazu) <= kapazitaet) {
+			weizenTragend += weizenNeuDazu;
+			erfolg = true;
+		}
+		return erfolg;
 	}
 
 	// Update is called once per frame
