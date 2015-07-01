@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 
-public class NPC : MonoBehaviour {
+public class NPC : MonoBehaviour, INPC {
 
 	//Art und Koordinaten seines Arbeitsplatzes
 	[SerializeField]
@@ -29,7 +29,7 @@ public class NPC : MonoBehaviour {
 	private Vector3 targetPosition = Vector3.zero;
 
 
-	void Start (Vector3 spawnPoint) {
+	void Start () {
 		//nächst besten freien job suchen/nehmen
 		bool jobSearchResult = Jobsuche ();
 		if (!jobSearchResult) {
@@ -44,14 +44,14 @@ public class NPC : MonoBehaviour {
 
 	bool Jobsuche(){
 		bool jobGefunden = false;
-		List<IWorkplace> workplaceListe= DBCharsAndBuildings.GetWorkplaces();
+		List<IWorkplace> workplaceListe= DBCharsAndBuildings.GetInstance().GetWorkplaces();
 		//mit for-schleife liste nach job durchsuchen
 		foreach (IWorkplace workplace in workplaceListe) {
 			if(workplace.GetMaxPlätze() > workplace.GetPlätzeBelegt()){
-				job = workplace.GetType();
+				job = workplace.GetJobType();
 				//Koordinaten des Arbeitsplatzes!!
-				arbeitsplatz = ((IBuilding)job).GetTransform();
-				targetPosition = arbeitsplatz;
+				arbeitsplatz = ((IBuilding)workplace).GetTransform();
+				targetPosition = arbeitsplatz.position;
 				jobGefunden=true;
 				jobIdleTrigger = false;
 				//arbeiter bei arbeitgeber anmelden:
@@ -65,7 +65,7 @@ public class NPC : MonoBehaviour {
 
 	IEnumerator JobDelay(float time){
 		while (jobIdleTrigger) {
-			yield return WaitForSeconds (time);
+			yield return new WaitForSeconds (time);
 			Jobsuche();
 		}
 

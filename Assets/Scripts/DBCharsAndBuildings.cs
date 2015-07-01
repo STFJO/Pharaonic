@@ -22,7 +22,7 @@ public class DBCharsAndBuildings {
 
 
 	//Erschafft EINE Instanz der Klasse und gibt diese dann zurücl
-	public DBCharsAndBuildings GetInstance()
+	public static DBCharsAndBuildings GetInstance()
 	{
 		if (self == null) {
 			self = new DBCharsAndBuildings ();
@@ -37,7 +37,7 @@ public class DBCharsAndBuildings {
 	{
 		List<IBuilding> temp = new List<IBuilding> ();
 		foreach (IBuilding building in buildings) {
-			if(building.GetType() == Typ)
+			if(building.GetBuildingType() == Typ)
 			{
 				temp.Add (building);
 			}

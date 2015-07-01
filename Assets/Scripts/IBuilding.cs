@@ -4,6 +4,6 @@ public interface IBuilding {
 
 
 	void GiveRessourceToPlayer(INPC Ziel);
-	Gebäudetyp GetType();
+	Gebäudetyp GetBuildingType();
 	Transform GetTransform();
 }
