@@ -52,6 +52,7 @@ public class NPC : MonoBehaviour, INPC {
 				//Koordinaten des Arbeitsplatzes!!
 				arbeitsplatz = ((IBuilding)workplace).GetTransform();
 				targetPosition = arbeitsplatz.position;
+				//TODO navMesh Movement mit targetPosition
 				jobGefunden=true;
 				jobIdleTrigger = false;
 				//arbeiter bei arbeitgeber anmelden:
@@ -81,8 +82,10 @@ public class NPC : MonoBehaviour, INPC {
 
 	}
 
-	//TODO targetPosition setzung regeln und NPC zu Ziel bewegen lassen
-
+	//TODO targetPosition setzung regeln 
+	public void SetTargetPosition(Vector3 newTargetPosition){
+		targetPosition = newTargetPosition;
+	}
 
 
 
@@ -102,48 +105,26 @@ public class NPC : MonoBehaviour, INPC {
 		return nahrungTragend;
 	}
 
-	//einheiten werden in zehner schritten übergeben
-	public bool AddRessourceTragend(int anzahl, RessourceType ressource){
+
+
+	public bool AddTragend(int neuDazu, RessourceType ressource){
 		bool erfolg = false;
-		if (ressource == Holz) {
-			erfolg = SetHolzTragend(anzahl);
-		}
-		if (ressource == Stein) {
-			erfolg = SetSteinTragend(anzahl);
-		}
-		if (ressource == Nahrung) {
-			erfolg = SetNahrungTragend(anzahl);
+		if ((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0) {
+			if(RessourceType.Holz){
+				holzTragend += neuDazu;
+			}
+			if(RessourceType.Stein){
+				steinTragend += neuDazu;
+			}
+			if(RessourceType.Nahrung){
+				nahrungTragend += neuDazu;
+			}
+			trageStatus += neuDazu;
+			erfolg = true;
 		}
 		return erfolg;
 	}
 
-	public bool SetHolzTragend(int holzNeuDazu){
-		bool erfolg = false;
-		if ((trageStatus + holzNeuDazu) <= kapazitaet && (trageStatus + holzNeuDazu) >= 0) {
-			holzTragend += holzNeuDazu;
-			trageStatus += holzNeuDazu;
-			erfolg = true;
-		}
-		return erfolg;
-	}
-	public bool SetSteinTragend(int steinNeuDazu){
-		bool erfolg = false;
-		if ((trageStatus + steinNeuDazu) <= kapazitaet && (trageStatus + steinNeuDazu) >= 0) {
-			steinTragend += steinNeuDazu;
-			trageStatus += steinNeuDazu;
-			erfolg = true;
-		}
-		return erfolg;
-	}
-	public bool SetNahrungTragend(int nahrungNeuDazu){
-		bool erfolg = false;
-		if ((trageStatus + nahrungNeuDazu) <= kapazitaet && (trageStatus + nahrungNeuDazu) >= 0) {
-			nahrungTragend += nahrungNeuDazu;
-			trageStatus += nahrungNeuDazu;
-			erfolg = true;
-		}
-		return erfolg;
-	}
 
 
 	// Update is called once per frame
