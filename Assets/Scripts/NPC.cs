@@ -20,8 +20,7 @@ public class NPC : MonoBehaviour, INPC {
 	//Ressourcen Verwaltung innerhalb des NPCs
 	private int holzTragend = 0;
 	private int steinTragend = 0;
-	private int fischTragend = 0;
-	private int weizenTragend = 0;
+	private int nahrungTragend = 0;
 	[SerializeField]
 	private int kapazitaet = 250;
 	private int trageStatus = 0;
@@ -53,6 +52,7 @@ public class NPC : MonoBehaviour, INPC {
 				//Koordinaten des Arbeitsplatzes!!
 				arbeitsplatz = ((IBuilding)workplace).GetTransform();
 				targetPosition = arbeitsplatz.position;
+				//TODO navMesh Movement mit targetPosition
 				jobGefunden=true;
 				jobIdleTrigger = false;
 				//arbeiter bei arbeitgeber anmelden:
@@ -64,7 +64,7 @@ public class NPC : MonoBehaviour, INPC {
 		return jobGefunden;
 	}
 
-	void Kuendigen(){
+	public void Kuendigen(){
 		jobIdleTrigger = true;
 		job = Gebäudetyp.None;
 		arbeitsplatz = null;
@@ -82,55 +82,50 @@ public class NPC : MonoBehaviour, INPC {
 
 	}
 
+	//TODO targetPosition setzung regeln 
+	public void SetTargetPosition(Vector3 newTargetPosition){
+		targetPosition = newTargetPosition;
+	}
+
+
+
+
+
+
+
+
+
 	public int GetHolzTragend(){
 		return holzTragend;
 	}
 	public int GetSteinTragend(){
 		return steinTragend;
 	}
-	public int GetFischTragend(){
-		return fischTragend;
+	public int GetNahrungTragend(){
+		return nahrungTragend;
 	}
-	public int GetWeizenTragend(){
-		return weizenTragend;
-	}
-	//einheiten werden in zehner schritten übergeben
-	public bool SetHolzTragend(int holzNeuDazu){
+
+
+
+	public bool AddTragend(int neuDazu, RessourceType ressource){
 		bool erfolg = false;
-		if ((trageStatus + holzNeuDazu) <= kapazitaet && (trageStatus + holzNeuDazu) >= 0) {
-			holzTragend += holzNeuDazu;
-			trageStatus += holzNeuDazu;
+		if ((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0) {
+			if(RessourceType.Holz){
+				holzTragend += neuDazu;
+			}
+			if(RessourceType.Stein){
+				steinTragend += neuDazu;
+			}
+			if(RessourceType.Nahrung){
+				nahrungTragend += neuDazu;
+			}
+			trageStatus += neuDazu;
 			erfolg = true;
 		}
 		return erfolg;
 	}
-	public bool SetSteinTragend(int steinNeuDazu){
-		bool erfolg = false;
-		if ((trageStatus + steinNeuDazu) <= kapazitaet && (trageStatus + steinNeuDazu) >= 0) {
-			steinTragend += steinNeuDazu;
-			trageStatus += steinNeuDazu;
-			erfolg = true;
-		}
-		return erfolg;
-	}
-	public bool SetFischTragend(int fischNeuDazu){
-		bool erfolg = false;
-		if ((trageStatus + fischNeuDazu) <= kapazitaet && (trageStatus + fischNeuDazu) >= 0) {
-			fischTragend += fischNeuDazu;
-			trageStatus += fischNeuDazu;
-			erfolg = true;
-		}
-		return erfolg;
-	}
-	public bool SetWeizenTragend(int weizenNeuDazu){
-		bool erfolg = false;
-		if ((trageStatus + weizenNeuDazu) <= kapazitaet && (trageStatus + weizenNeuDazu) >= 0) {
-			weizenTragend += weizenNeuDazu;
-			trageStatus += weizenNeuDazu;
-			erfolg = true;
-		}
-		return erfolg;
-	}
+
+
 
 	// Update is called once per frame
 	void Update () {
