@@ -107,7 +107,7 @@ public class NPC : MonoBehaviour, INPC {
 
 
 
-	public bool SetTragend(int neuDazu, RessourceType ressource){
+	public bool AddTragend(int neuDazu, RessourceType ressource){
 		bool erfolg = false;
 		if ((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0) {
 			if(RessourceType.Holz){
