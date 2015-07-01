@@ -26,7 +26,7 @@ public class NPC : MonoBehaviour {
 	private int trageStatus = 0;
 	//NPC versuch immer den Target Vector zu erreichen
 	[SerializeField]
-	private Vector3 targetPosition = 0;
+	private Vector3 targetPosition = Vector3.zero;
 
 
 	void Start (Vector3 spawnPoint) {
@@ -39,7 +39,7 @@ public class NPC : MonoBehaviour {
 		citizenCounter ++;
 		citizenID = citizenCounter;
 		//bei DBCharsAndBuildings anmelden:
-		DBCharsAndBuildings.AddNpc (this);
+		DBCharsAndBuildings.GetInstance().AddNpc (this);
 	}
 
 	bool Jobsuche(){

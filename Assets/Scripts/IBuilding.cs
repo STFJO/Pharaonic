@@ -3,7 +3,7 @@
 public interface IBuilding {
 
 
-	void GiveRessourceToPlayer(INpc Ziel);
+	void GiveRessourceToPlayer(INPC Ziel);
 	Gebäudetyp GetType();
 	Transform GetTransform();
 }

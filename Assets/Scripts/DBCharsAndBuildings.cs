@@ -5,7 +5,7 @@ using System.Collections;
 public class DBCharsAndBuildings {
 
 	private List<IBuilding> buildings;
-	private List<INpc> npcs;
+	private List<INPC> npcs;
 	private List<IWorkplace> arbeitsplätze;
 	
 
@@ -15,8 +15,8 @@ public class DBCharsAndBuildings {
 	private DBCharsAndBuildings()
 	{
 		buildings = new List<IBuilding>();
-		npcs = new List<INpc>();
-		arbeitsplätze = new List<IWorkplace>;
+		npcs = new List<INPC>();
+		arbeitsplätze = new List<IWorkplace>();
 
 	}
 
@@ -62,9 +62,9 @@ public class DBCharsAndBuildings {
 		List<IBuilding> mögliche = FindeGebäude(Typus);
 
 		for (int i = 0; i < mögliche.Count; i++) {
-			if (EntfernungBerechnen (NpcPosition, mögliche [i].GetTransform) < distance) {
+			if (EntfernungBerechnen (NpcPosition, mögliche [i].GetTransform()) < distance) {
 				index = i;
-				distance = EntfernungBerechnen (NpcPosition, mögliche [i].GetTransform);
+				distance = EntfernungBerechnen (NpcPosition, mögliche [i].GetTransform());
 			}
 		}
 
@@ -78,7 +78,7 @@ public class DBCharsAndBuildings {
 		buildings.Add(gebäude);
 	}
 
-	public void AddNpc(INpc Npc)
+	public void AddNpc(INPC Npc)
 	{
 		npcs.Add (Npc);
 	}
@@ -92,19 +92,19 @@ public class DBCharsAndBuildings {
 	//Get und so
 	public List<IWorkplace> GetWorkplaces()
 	{
-		List<IWorkplaces> workplaces = new List<IWorkplace> (arbeitsplätze);
+		List<IWorkplace> workplaces = new List<IWorkplace> (arbeitsplätze);
 		return workplaces;
 	}
 
 	public List<IBuilding> GetBuildings()
 	{
-		List<IBuildings> gebäude = new List<IBuildings> (buildings);
+		List<IBuilding> gebäude = new List<IBuilding> (buildings);
 		return gebäude;
 	}
 
-	public List<INpc> GetNpcs()
+	public List<INPC> GetNpcs()
 	{
-		List<INpc> Characters = new List<INpcs> (npcs);
+		List<INPC> Characters = new List<INPC> (npcs);
 		return Characters;
 	}
 
