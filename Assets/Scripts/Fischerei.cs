@@ -1,25 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fischerei : MonoBehaviour, IBuilding
+public class Fischerei : Workplace
 {
-    public Gebäudetyp GetTyp()
-    {
-        return Gebäudetyp.Fischerei;
-    }
-
-    void OnTriggerEnter (Collider other) 
-    {
-		other.gameObject.GetComponent <GiveRessourceToPlayer>();	
-	}
-
-	Gebäudetyp IBuilding.GetType ()
+	super.Gebäudeart = Fischerei; 
+	//Gibt dem Npc in einem bestimmten Zeitabstand Ressourcen wenn er sich in unmittelbarer Nähe befindet
+	void OnTriggerEnter (Collider other) 
 	{
-		throw new System.NotImplementedException ();
-	}
-
-	public Transform GetTransform ()
-	{
-		throw new System.NotImplementedException ();
+		NPC isIt = other.gameObject.GetComponent <NPC>;
+		if (isIt != null) {
+			GiveRessourceToPlayer (isIt, RessourceType Nahrung);
+		}
 	}
 }
