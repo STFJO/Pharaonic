@@ -63,6 +63,14 @@ public class NPC : MonoBehaviour {
 		return jobGefunden;
 	}
 
+	void Kuendigen(){
+		jobIdleTrigger = true;
+		bool jobSearchResult = Jobsuche ();
+		if (!jobSearchResult) {
+			StartCoroutine(JobDelay(jobSuchZyklusZeit));
+		}
+	}
+
 	IEnumerator JobDelay(float time){
 		while (jobIdleTrigger) {
 			yield return WaitForSeconds (time);
