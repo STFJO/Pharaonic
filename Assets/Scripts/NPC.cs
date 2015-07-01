@@ -20,8 +20,7 @@ public class NPC : MonoBehaviour, INPC {
 	//Ressourcen Verwaltung innerhalb des NPCs
 	private int holzTragend = 0;
 	private int steinTragend = 0;
-	private int fischTragend = 0;
-	private int weizenTragend = 0;
+	private int nahrungTragend = 0;
 	[SerializeField]
 	private int kapazitaet = 250;
 	private int trageStatus = 0;
@@ -82,19 +81,42 @@ public class NPC : MonoBehaviour, INPC {
 
 	}
 
+	//TODO targetPosition setzung regeln und NPC zu Ziel bewegen lassen
+
+
+
+
+
+
+
+
+
+
 	public int GetHolzTragend(){
 		return holzTragend;
 	}
 	public int GetSteinTragend(){
 		return steinTragend;
 	}
-	public int GetFischTragend(){
-		return fischTragend;
+	public int GetNahrungTragend(){
+		return nahrungTragend;
 	}
-	public int GetWeizenTragend(){
-		return weizenTragend;
-	}
+
 	//einheiten werden in zehner schritten übergeben
+	public bool AddRessourceTragend(int anzahl, RessourceType ressource){
+		bool erfolg = false;
+		if (ressource == Holz) {
+			erfolg = SetHolzTragend(anzahl);
+		}
+		if (ressource == Stein) {
+			erfolg = SetSteinTragend(anzahl);
+		}
+		if (ressource == Nahrung) {
+			erfolg = SetNahrungTragend(anzahl);
+		}
+		return erfolg;
+	}
+
 	public bool SetHolzTragend(int holzNeuDazu){
 		bool erfolg = false;
 		if ((trageStatus + holzNeuDazu) <= kapazitaet && (trageStatus + holzNeuDazu) >= 0) {
@@ -113,24 +135,16 @@ public class NPC : MonoBehaviour, INPC {
 		}
 		return erfolg;
 	}
-	public bool SetFischTragend(int fischNeuDazu){
+	public bool SetNahrungTragend(int nahrungNeuDazu){
 		bool erfolg = false;
-		if ((trageStatus + fischNeuDazu) <= kapazitaet && (trageStatus + fischNeuDazu) >= 0) {
-			fischTragend += fischNeuDazu;
-			trageStatus += fischNeuDazu;
+		if ((trageStatus + nahrungNeuDazu) <= kapazitaet && (trageStatus + nahrungNeuDazu) >= 0) {
+			nahrungTragend += nahrungNeuDazu;
+			trageStatus += nahrungNeuDazu;
 			erfolg = true;
 		}
 		return erfolg;
 	}
-	public bool SetWeizenTragend(int weizenNeuDazu){
-		bool erfolg = false;
-		if ((trageStatus + weizenNeuDazu) <= kapazitaet && (trageStatus + weizenNeuDazu) >= 0) {
-			weizenTragend += weizenNeuDazu;
-			trageStatus += weizenNeuDazu;
-			erfolg = true;
-		}
-		return erfolg;
-	}
+
 
 	// Update is called once per frame
 	void Update () {
