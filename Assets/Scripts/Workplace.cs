@@ -33,7 +33,7 @@ public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
 	{
 		int altMaxPlätze = maxPlätze;
 		maxPlätze = neuerMaxWert;
-		for(int i = altMaxPlätze - maxPlätze, i>0, i--)
+		for(int i = altMaxPlätze - maxPlätze; i>0; i--)
 		{
 			gemeldeteArbeiter[0].Kuendigen();
 			gemeldeteArbeiter.RemoveAt(0);
@@ -49,7 +49,7 @@ public class Worklplace : MonoBehaviour, IBuilding, IWorkplace, RessourceType
 			StartCoroutine(Delay (delayForGivingRessources));
 		}
 			               
-		Ziel.SetTargetPosition(DBCharsAndBuildings.FindeZielGebäude(Gebäudetyp.Lager, Ziel.transform);
+		Ziel.SetTargetPosition(DBCharsAndBuildings.FindeZielGebäude(Gebäudetyp.Lager, Ziel.transform));
 			               
 	}	               
 	
