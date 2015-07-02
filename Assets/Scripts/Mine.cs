@@ -15,6 +15,7 @@ public class Mine : Workplace
 	{
 		NPC isIt = other.gameObject.GetComponent <NPC>();
 		if (isIt != null) {
+//			GiveRessourceToPlayer (isIt, RessourceType.Stein);
 			ArbeiterAnwesend(isIt);
 			StartCoroutine(RessourceGiver(delayTime,isIt,RessourceType.Stein));
 		}
