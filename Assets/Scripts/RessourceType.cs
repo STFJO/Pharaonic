@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public enum RessourceType  {
 	
-	Holz, Stein, Nahrung
+	WOOD, STONE, FOOD
 	
 }

@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public interface IBuilding {
 
 
-	Gebäudetyp GetBuildingType();
+	Buildingtype GetBuildingType();
 	Transform GetTransform();
 }

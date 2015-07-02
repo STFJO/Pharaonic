@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
@@ -6,24 +6,17 @@ public class DBCharsAndBuildings {
 
 	private List<IBuilding> buildings;
 	private List<INPC> npcs;
-	private List<IWorkplace> arbeitsplätze;
-	
-
+	private List<IWorkplace> workplaces;
 	private static DBCharsAndBuildings self;
-	
 
-	private DBCharsAndBuildings()
-	{
+	private DBCharsAndBuildings(){
 		buildings = new List<IBuilding>();
 		npcs = new List<INPC>();
-		arbeitsplätze = new List<IWorkplace>();
-
+		workplaces = new List<IWorkplace>();
 	}
 
-
-	//Erschafft EINE Instanz der Klasse und gibt diese dann zurücl
-	public static DBCharsAndBuildings GetInstance()
-	{
+	//Erschafft EINE Instanz der Klasse und gibt diese dann zurück
+	public static DBCharsAndBuildings GetInstance(){
 		if (self == null) {
 			self = new DBCharsAndBuildings ();
 		}
@@ -31,95 +24,74 @@ public class DBCharsAndBuildings {
 	}
 
 	public void RegistrationBuilding(IBuilding building){
-		AddGebäude (building);
+		AddBuilding(building);
 		IWorkplace wp = building as IWorkplace;
-		if (wp != null) {
+		if (wp != null){
 			AddWorkplace(wp);
 		}
 	}
+
 	public void RegistrationCitizen(INPC npc){
-		AddNpc (npc);
+		AddNpc(npc);
 	}
 
 	//Findet alle Gebäude vom gesuchten Datentyp und speichert sie in einer Liste, die sie dann ausgibt
-	public List<IBuilding> FindeGebäude(Gebäudetyp Typ)
-	{
-		List<IBuilding> temp = new List<IBuilding> ();
+	public List<IBuilding> FindBuilding(Buildingtype type){
+		List<IBuilding> temp = new List<IBuilding>();
 		foreach (IBuilding building in buildings) {
-			if(building.GetBuildingType() == Typ)
-			{
+			if(building.GetBuildingType() == type){
 				temp.Add (building);
 			}
 		}
-
 		return temp;
 	}
 
-
 	//Gibt die Entfernung zweier Positionen zurück
-	private float EntfernungBerechnen(Transform positionA, Transform positionB)
-	{
+	private float CalculateDistance(Transform positionA, Transform positionB){
 		return (positionB.position - positionA.position).sqrMagnitude;
 	}
 
-
-
 	//Gibt einem Npc das gewünschte Gebäude mit der kürzesten Entfernung zurück
-	public IBuilding FindeZielGebäude(Gebäudetyp Typus, Transform NpcPosition){
+	public IBuilding FindClosestTargetBuilding(Buildingtype Typus, Transform NpcPosition){
 		int index = 0;
 		float distance = float.PositiveInfinity;
-		List<IBuilding> mögliche = FindeGebäude(Typus);
-
-		for (int i = 0; i < mögliche.Count; i++) {
-			if (EntfernungBerechnen (NpcPosition, mögliche [i].GetTransform()) < distance) {
+		List<IBuilding> possibles = FindBuilding(Typus);
+		for(int i = 0; i < possibles.Count; i++){
+			if(CalculateDistance(NpcPosition, possibles [i].GetTransform()) < distance){
 				index = i;
-				distance = EntfernungBerechnen (NpcPosition, mögliche [i].GetTransform());
+				distance = CalculateDistance(NpcPosition, possibles [i].GetTransform());
 			}
 		}
-
-		return mögliche [index];
+		return possibles [index];
 	}
 
-
-	//Selbsterklärend
-	private void AddGebäude(IBuilding gebäude)
-	{
-		buildings.Add(gebäude);
+	private void AddBuilding(IBuilding pBuilding){
+		buildings.Add(pBuilding);
 	}
 
-	private void AddNpc(INPC Npc)
-	{
-		npcs.Add (Npc);
+	private void AddNpc(INPC pNPC){
+		npcs.Add(pNPC);
 	}
 
-	private void AddWorkplace(IWorkplace Arbeitsplatz)
-	{
-		arbeitsplätze.Add (Arbeitsplatz);
+	private void AddWorkplace(IWorkplace pWorkplace){
+		workplaces.Add(pWorkplace);
 	}
 
-
-	//Get und so
 	public List<IWorkplace> GetWorkplaces()
 	{
-		List<IWorkplace> workplaces = new List<IWorkplace> (arbeitsplätze);
-		return workplaces;
+		List<IWorkplace> pWorkplaces = new List<IWorkplace> (workplaces);
+		return pWorkplaces;
 	}
 
 	public List<IBuilding> GetBuildings()
 	{
-		List<IBuilding> gebäude = new List<IBuilding> (buildings);
-		return gebäude;
+		List<IBuilding> pBuildings = new List<IBuilding> (buildings);
+		return pBuildings;
 	}
 
 	public List<INPC> GetNpcs()
 	{
-		List<INPC> Characters = new List<INPC> (npcs);
-		return Characters;
+		List<INPC> pCharacters = new List<INPC> (npcs);
+		return pCharacters;
 	}
-
-
-
-
-
-
 }

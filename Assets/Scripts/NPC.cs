@@ -8,91 +8,90 @@ using System.Collections;
 public class NPC : MonoBehaviour, INPC {
 
 	[SerializeField]
-	private Gebäudetyp job = Gebäudetyp.None;
-	private Transform arbeitsplatz;
-	private Transform wohnhaus;
+	private Buildingtype job = Buildingtype.None;
+	private Transform hisWorkplace;
+	private Transform home;
 	[SerializeField]
 	private static int citizenCounter =0;
 	private int citizenID;
 	private Coroutine jobIdle;
 	private bool jobIdleTrigger = true;
 	[SerializeField]
-	private float jobSuchZyklusZeit = 5;
+	private float jobSearchZyclusTime = 5;
 	[SerializeField]
-	private int holzTragend = 0;
+	private int woodCargo = 0;
 	[SerializeField]
-	private int steinTragend = 0;
+	private int stoneCargo = 0;
 	[SerializeField]
-	private int nahrungTragend = 0;
+	private int foodCargo = 0;
 	[SerializeField]
-	private int kapazitaet = 250;
+	private int capacity = 250;
 	[SerializeField]
-	private int trageStatus = 0;
+	private int cargoStatus = 0;
 	[SerializeField]
 	private Vector3 targetPosition = Vector3.zero;
 
 	void Start(){
-		bool jobSearchResult = Jobsuche ();
+		bool jobSearchResult = Jobsearch ();
 		if(!jobSearchResult){
-			StartCoroutine(JobDelay(jobSuchZyklusZeit));
+			StartCoroutine(JobDelay(jobSearchZyclusTime));
 		}
 		citizenCounter ++;
 		citizenID = citizenCounter;
 		DBCharsAndBuildings.GetInstance().RegistrationCitizen(this);
 	}
 
-	bool Jobsuche(){
+	bool Jobsearch(){
 		List<IWorkplace> workplaceListe = DBCharsAndBuildings.GetInstance().GetWorkplaces();
 		Debug.Log("Suche Job");
 		foreach(IWorkplace workplace in workplaceListe){
-			//Wenn Platz vorhanden wird Platz belegt
-			if(workplace.GetMaxPlätze() > workplace.GetPlätzeBelegt()){
+			if(workplace.HasJobsLeft()){
 				Debug.Log(workplace);
 				job = workplace.GetJobType();
-				arbeitsplatz = ((IBuilding)workplace).GetTransform();
-				targetPosition = arbeitsplatz.position;
+				hisWorkplace = ((IBuilding)workplace).GetTransform();
+				targetPosition = hisWorkplace.position;
 				//TODO navMesh Movement mit targetPosition
 				jobIdleTrigger = false;
-				workplace.MeldeArbeiter(this);
+				workplace.RegistrationWorker(this);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public void Kuendigen(){
+	public void Dismiss(){
 		targetPosition = Vector3.zero;
 		jobIdleTrigger = true;
-		job = Gebäudetyp.None;
-		arbeitsplatz = null;
-		bool jobSearchResult = Jobsuche();
+		job = Buildingtype.None;
+		hisWorkplace = null;
+		bool jobSearchResult = Jobsearch();
 		if(!jobSearchResult){
-			StartCoroutine(JobDelay(jobSuchZyklusZeit));
+			StartCoroutine(JobDelay(jobSearchZyclusTime));
 		}
 	}
 
 	IEnumerator JobDelay(float time){
 		while(jobIdleTrigger){
 			yield return new WaitForSeconds(time);
-			Jobsuche();
+			Jobsearch();
 		}
 	}
 
-	public bool AddTragend(int neuDazu, RessourceType ressource){
-		if((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0){
-			if(RessourceType.Holz == ressource){
-				holzTragend += neuDazu;
-				trageStatus += neuDazu;
+	public bool AddCargo(int newToAdd, RessourceType ressource){
+		if((cargoStatus + newToAdd) <= capacity && (cargoStatus + newToAdd) >= 0){
+			if(RessourceType.WOOD == ressource){
+				woodCargo += newToAdd;
+				cargoStatus += newToAdd;
 				return true;
 			}
-			if(RessourceType.Stein == ressource){
-				steinTragend += neuDazu;
-				trageStatus += neuDazu;
+			if(RessourceType.STONE == ressource){
+				stoneCargo += newToAdd;
+				cargoStatus += newToAdd;
 				return true;
 			}
-			if(RessourceType.Nahrung == ressource){
-				nahrungTragend += neuDazu;
-				trageStatus += neuDazu;
+			if(RessourceType.FOOD == ressource){
+				foodCargo += newToAdd;
+				cargoStatus += newToAdd;
 				return true;
 			}
 		}
@@ -104,23 +103,23 @@ public class NPC : MonoBehaviour, INPC {
 		targetPosition = newTargetPosition;
 	}
 	
-	public void SetWohnhausTransform(Transform pWohnhaus){
-		wohnhaus = pWohnhaus;
+	public void SetHomeTransform(Transform pHome){
+		home = pHome;
 	}
 	
-	public Transform GetArbeitsplatz(){
-		return arbeitsplatz;
+	public Transform GetWorkplace(){
+		return hisWorkplace;
 	}
 
-	public int GetHolzTragend(){
-		return holzTragend;
+	public int GetWoodCargo(){
+		return woodCargo;
 	}
 
-	public int GetSteinTragend(){
-		return steinTragend;
+	public int GetStoneCargo(){
+		return stoneCargo;
 	}
 
-	public int GetNahrungTragend(){
-		return nahrungTragend;
+	public int GetFoodCargo(){
+		return foodCargo;
 	}
 }

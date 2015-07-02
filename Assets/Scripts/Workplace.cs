@@ -7,90 +7,76 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 {
 
 	[SerializeField]
-	protected Gebäudetyp gebäudeart;
+	protected Buildingtype typeOfBuilding;
 	[SerializeField]
-	protected int ressourcenVorrat = 10000;
+	protected int ressourceStock = 10000;
 	[SerializeField]
-	protected int maxPlätze;
-	protected List<NPC> gemeldeteArbeiter = new List<NPC>();
-	protected List<NPC> anwesendeArbeiter = new List<NPC>();
-
-	
+	protected int maxJobs;
+	protected List<NPC> listedWorkers = new List<NPC>();
+	protected List<NPC> presentWorkers = new List<NPC>();
 
 	//Meldet Arbeiter an der Arbeitsstelle an
-	public void MeldeArbeiter(NPC npc)
-	{
-		gemeldeteArbeiter.Add (npc);
+	public void RegistrationWorker(NPC npc){
+		listedWorkers.Add(npc);
 	}
 
 	//Gibt belegte Plätze zurück
-	public int GetPlätzeBelegt()
-	{
-		return gemeldeteArbeiter.Count;
+	public int CountListedWorkers(){
+		return listedWorkers.Count;
 	}
 
 	//Verändert die maximal möglich belegbaren Plätze
-	public void SetMaxPlätze(int neuerMaxWert)
-	{
-		int altMaxPlätze = maxPlätze;
-		maxPlätze = neuerMaxWert;
-		for(int i = altMaxPlätze - maxPlätze; i>0; i--)
-		{
-			gemeldeteArbeiter[0].Kuendigen();
-			gemeldeteArbeiter.RemoveAt(0);
+	public void SetMaxPresent(int newMaxPresent){
+		int oldMaxPresent = maxJobs;
+		maxJobs = newMaxPresent;
+		for(int i = oldMaxPresent - maxJobs; i>0; i--){
+			listedWorkers[0].Dismiss();
+			listedWorkers.RemoveAt(0);
 		}
 	}
 
-	public void ArbeiterAnwesend(NPC anwesend){
-		anwesendeArbeiter.Add (anwesend);
+	public void WorkerPresent(NPC anwesend){
+		presentWorkers.Add(anwesend);
 	}
-	public void ArbeiterAbwesend(NPC abwesend){
-		anwesendeArbeiter.Remove (abwesend);
+
+	public void WorkerAbsent(NPC abwesend){
+		presentWorkers.Remove(abwesend);
 	}
 	               
-
-	public IEnumerator RessourceGiver (float pTime,NPC pZiel,RessourceType pRessource)
-	{
-		while(anwesendeArbeiter.Contains(pZiel)&& gemeldeteArbeiter.Contains(pZiel)) {
-			if (pZiel.AddTragend (10, pRessource)) {
-				ressourcenVorrat = ressourcenVorrat - 10;
+	public IEnumerator RessourceGiver(float pTime,NPC pTarget,RessourceType pRessource){
+		while(presentWorkers.Contains(pTarget) && listedWorkers.Contains(pTarget)){
+			if(pTarget.AddCargo (10, pRessource)){
+				ressourceStock = ressourceStock - 10;
 			}
 			else{
 				break;
 			}
-			yield return new WaitForSeconds (pTime);
+			yield return new WaitForSeconds(pTime);
 		}
-		pZiel.SetTargetPosition((DBCharsAndBuildings.GetInstance().FindeZielGebäude(Gebäudetyp.Lager, pZiel.transform)).GetTransform().position);
+		pTarget.SetTargetPosition((DBCharsAndBuildings.GetInstance().FindClosestTargetBuilding(Buildingtype.Storrage, pTarget.transform)).GetTransform().position);
 	}
 
-	
-	//Obviouuuus
-	public Transform GetTransform ()
-	{
+	public Transform GetTransform(){
 		return transform;
 	}
 
-	public Gebäudetyp GetBuildingType ()
-	{
-		return gebäudeart;
+	public Buildingtype GetBuildingType(){
+		return typeOfBuilding;
 	}
 
-	public List<NPC> GemeldeteArbeiter ()
-	{
-		return gemeldeteArbeiter;
+	public List<NPC> GetListedWorkers(){
+		return listedWorkers;
 	}
 
-	public int GetMaxPlätze ()
-	{
-		return maxPlätze;
+	public int GetMaxJobs(){
+		return maxJobs;
 	}
 
-
-	public Gebäudetyp GetJobType ()
-	{
-		return gebäudeart;
+	public Buildingtype GetJobType(){
+		return typeOfBuilding;
 	}
+
 	public bool HasJobsLeft(){
-		return maxPlätze>gemeldeteArbeiter.Count;
+		return maxJobs>listedWorkers.Count;
 	}
 }
