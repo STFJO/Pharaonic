@@ -89,7 +89,9 @@ public class NPC : MonoBehaviour, INPC {
 		targetPosition = newTargetPosition;
 	}
 
-
+	public void SetWohnhausTransform(Transform pWohnhaus){
+		wohnhaus = pWohnhaus;
+	}
 
 
 
@@ -127,10 +129,4 @@ public class NPC : MonoBehaviour, INPC {
 		return erfolg;
 	}
 
-
-
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
