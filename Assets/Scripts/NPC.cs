@@ -22,11 +22,15 @@ public class NPC : MonoBehaviour, INPC {
 	[SerializeField]
 	private float jobSuchZyklusZeit = 5;
 	//Ressourcen Verwaltung innerhalb des NPCs
+	[SerializeField]
 	private int holzTragend = 0;
+	[SerializeField]
 	private int steinTragend = 0;
+	[SerializeField]
 	private int nahrungTragend = 0;
 	[SerializeField]
 	private int kapazitaet = 250;
+	[SerializeField]
 	private int trageStatus = 0;
 	//NPC versuch immer den Target Vector zu erreichen
 	[SerializeField]

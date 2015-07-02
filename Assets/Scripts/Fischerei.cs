@@ -21,6 +21,7 @@ public class Fischerei : Workplace
 
 	void OnTriggerEnter (Collider other) 
 	{
+		Debug.Log ("Collision");
 		NPC isIt = other.gameObject.GetComponent <NPC>();
 		if (isIt != null) {
 			ArbeiterAnwesend(isIt);
