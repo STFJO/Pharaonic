@@ -10,7 +10,7 @@ public abstract class AbstractDesire {
 	protected float defaultIncrease=0;
 	protected float defaultDecrease=0;
 	protected int severity=1;
-	protected NPCKI owner;
+	protected NPCAI owner;
 
 	public string GetName ()
 	{
@@ -84,7 +84,7 @@ public abstract class AbstractDesire {
 		defaultDecrease=amount;
 	}
 
-	public void SetOwner(NPCKI owner){
+	public void SetOwner(NPCAI owner){
 		this.owner = owner;
 	}
 
