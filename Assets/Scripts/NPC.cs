@@ -65,6 +65,7 @@ public class NPC : MonoBehaviour, INPC {
 	}
 
 	public void Kuendigen(){
+		targetPosition = Vector3.zero;
 		jobIdleTrigger = true;
 		job = Gebäudetyp.None;
 		arbeitsplatz = null;

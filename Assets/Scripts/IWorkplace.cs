@@ -9,6 +9,5 @@ public interface IWorkplace {
 	void SetPlätzeBelegt(int neuerStand);
 	void SetMaxPlätze(int neuerMaxWert);
 	int GetPlätzeBelegt();
-	void GiveRessourceToPlayer();
 	Gebäudetyp GetJobType();
 }
