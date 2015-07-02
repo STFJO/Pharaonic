@@ -12,7 +12,7 @@ public class NPC : MonoBehaviour, INPC {
 	private Transform arbeitsplatz;
 	private Transform wohnhaus;
 	[SerializeField]
-	private static int citizenCounter = 0;
+	private static int citizenCounter =0;
 	private int citizenID;
 	private Coroutine jobIdle;
 	private bool jobIdleTrigger = true;
@@ -31,10 +31,9 @@ public class NPC : MonoBehaviour, INPC {
 	[SerializeField]
 	private Vector3 targetPosition = Vector3.zero;
 
-
-	void Start () {
+	void Start(){
 		bool jobSearchResult = Jobsuche ();
-		if (!jobSearchResult) {
+		if(!jobSearchResult){
 			StartCoroutine(JobDelay(jobSuchZyklusZeit));
 		}
 		citizenCounter ++;
@@ -43,9 +42,9 @@ public class NPC : MonoBehaviour, INPC {
 	}
 
 	bool Jobsuche(){
-		List<IWorkplace> workplaceListe= DBCharsAndBuildings.GetInstance().GetWorkplaces();
+		List<IWorkplace> workplaceListe = DBCharsAndBuildings.GetInstance().GetWorkplaces();
 		Debug.Log("Suche Job");
-		foreach (IWorkplace workplace in workplaceListe) {
+		foreach(IWorkplace workplace in workplaceListe){
 			if(workplace.GetMaxPlätze() > workplace.GetPlätzeBelegt()){
 				Debug.Log(workplace);
 				job = workplace.GetJobType();
@@ -65,30 +64,29 @@ public class NPC : MonoBehaviour, INPC {
 		jobIdleTrigger = true;
 		job = Gebäudetyp.None;
 		arbeitsplatz = null;
-		bool jobSearchResult = Jobsuche ();
-		if (!jobSearchResult) {
+		bool jobSearchResult = Jobsuche();
+		if(!jobSearchResult){
 			StartCoroutine(JobDelay(jobSuchZyklusZeit));
 		}
 	}
 
 	IEnumerator JobDelay(float time){
-		while (jobIdleTrigger) {
-			yield return new WaitForSeconds (time);
+		while(jobIdleTrigger){
+			yield return new WaitForSeconds(time);
 			Jobsuche();
 		}
-
 	}
 
 	public bool AddTragend(int neuDazu, RessourceType ressource){
 		bool erfolg = false;
-		if ((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0) {
-			if(RessourceType.Holz== ressource){
+		if((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0){
+			if(RessourceType.Holz==ressource){
 				holzTragend += neuDazu;
 			}
-			if(RessourceType.Stein== ressource){
+			if(RessourceType.Stein==ressource){
 				steinTragend += neuDazu;
 			}
-			if(RessourceType.Nahrung== ressource){
+			if(RessourceType.Nahrung==ressource){
 				nahrungTragend += neuDazu;
 			}
 			trageStatus += neuDazu;
@@ -121,7 +119,4 @@ public class NPC : MonoBehaviour, INPC {
 	public int GetNahrungTragend(){
 		return nahrungTragend;
 	}
-	
-
-
 }
