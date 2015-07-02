@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections;
 
+
+[RequireComponent (typeof (NavMeshAgent))]
+[RequireComponent (typeof (Collider))]
 public class NPC : MonoBehaviour, INPC {
 
 	//Art und Koordinaten seines Arbeitsplatzes
 	[SerializeField]
-	private Gebäudetyp job;
+	private Gebäudetyp job = Gebäudetyp.None;
 	private Transform arbeitsplatz;
 	private Transform wohnhaus;
 	//Nummerierung der NPCs
@@ -46,9 +49,11 @@ public class NPC : MonoBehaviour, INPC {
 	bool Jobsuche(){
 		bool jobGefunden = false;
 		List<IWorkplace> workplaceListe= DBCharsAndBuildings.GetInstance().GetWorkplaces();
+		Debug.Log("Suche Job");
 		//mit for-schleife liste nach job durchsuchen
 		foreach (IWorkplace workplace in workplaceListe) {
 			if(workplace.GetMaxPlätze() > workplace.GetPlätzeBelegt()){
+				Debug.Log(workplace);
 				job = workplace.GetJobType();
 				//Koordinaten des Arbeitsplatzes!!
 				arbeitsplatz = ((IBuilding)workplace).GetTransform();

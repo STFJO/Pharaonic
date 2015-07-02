@@ -11,7 +11,6 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 	[SerializeField]
 	protected int ressourcenVorrat = 10000;
 	[SerializeField]
-	protected int delayForGivingRessources = 30;
 	protected int maxPlätze;
 	protected List<NPC> gemeldeteArbeiter = new List<NPC>();
 	protected List<NPC> anwesendeArbeiter = new List<NPC>();
@@ -64,13 +63,6 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 		pZiel.SetTargetPosition((DBCharsAndBuildings.GetInstance().FindeZielGebäude(Gebäudetyp.Lager, pZiel.transform)).GetTransform().position);
 	}
 
-
-	//Its so obvious
-	public Gebäudetyp GetTyp()
-	{
-		return gebäudeart;
-	}
-
 	
 	//Obviouuuus
 	public Transform GetTransform ()
@@ -80,28 +72,25 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 
 	public Gebäudetyp GetBuildingType ()
 	{
-		throw new System.NotImplementedException ();
+		return gebäudeart;
 	}
 
 	public List<NPC> GemeldeteArbeiter ()
 	{
-		throw new System.NotImplementedException ();
+		return gemeldeteArbeiter;
 	}
 
 	public int GetMaxPlätze ()
 	{
-		throw new System.NotImplementedException ();
-	}
-
-	public void SetPlätzeBelegt (int neuerStand)
-	{
-		throw new System.NotImplementedException ();
+		return maxPlätze;
 	}
 
 
 	public Gebäudetyp GetJobType ()
 	{
-		throw new System.NotImplementedException ();
+		return gebäudeart;
 	}
-
+	public bool HasJobsLeft(){
+		return maxPlätze>gemeldeteArbeiter.Count;
+	}
 }

@@ -1,14 +1,10 @@
 fileFormatVersion: 2
-guid: 0ac4fd255577bfa4cadeb0b065152198
+guid: 982a12031d2189144bd32e52a9eeff60
+timeCreated: 1435825697
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
-  fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Pyramid
-    9500000: //RootNode
+  fileIDToRecycleName: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -28,7 +24,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
