@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Mine : Workplace
 {
@@ -15,7 +16,6 @@ public class Mine : Workplace
 	{
 		NPC isIt = other.gameObject.GetComponent <NPC>();
 		if (isIt != null) {
-//			GiveRessourceToPlayer (isIt, RessourceType.Stein);
 			ArbeiterAnwesend(isIt);
 			StartCoroutine(RessourceGiver(delayTime,isIt,RessourceType.Stein));
 		}
