@@ -78,21 +78,24 @@ public class NPC : MonoBehaviour, INPC {
 	}
 
 	public bool AddTragend(int neuDazu, RessourceType ressource){
-		bool erfolg = false;
 		if((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0){
-			if(RessourceType.Holz==ressource){
+			if(RessourceType.Holz == ressource){
 				holzTragend += neuDazu;
+				trageStatus += neuDazu;
+				return true;
 			}
-			if(RessourceType.Stein==ressource){
+			if(RessourceType.Stein == ressource){
 				steinTragend += neuDazu;
+				trageStatus += neuDazu;
+				return true;
 			}
-			if(RessourceType.Nahrung==ressource){
+			if(RessourceType.Nahrung == ressource){
 				nahrungTragend += neuDazu;
+				trageStatus += neuDazu;
+				return true;
 			}
-			trageStatus += neuDazu;
-			erfolg = true;
 		}
-		return erfolg;
+		return false;
 	}
 
 	//TODO targetPosition setzung regeln 
