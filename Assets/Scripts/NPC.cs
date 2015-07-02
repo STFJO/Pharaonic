@@ -7,21 +7,17 @@ using System.Collections;
 [RequireComponent (typeof (Collider))]
 public class NPC : MonoBehaviour, INPC {
 
-	//Art und Koordinaten seines Arbeitsplatzes
 	[SerializeField]
 	private Gebäudetyp job = Gebäudetyp.None;
 	private Transform arbeitsplatz;
 	private Transform wohnhaus;
-	//Nummerierung der NPCs
 	[SerializeField]
 	private static int citizenCounter = 0;
 	private int citizenID;
-	//Jobsuche
 	private Coroutine jobIdle;
 	private bool jobIdleTrigger = true;
 	[SerializeField]
 	private float jobSuchZyklusZeit = 5;
-	//Ressourcen Verwaltung innerhalb des NPCs
 	[SerializeField]
 	private int holzTragend = 0;
 	[SerializeField]
@@ -32,21 +28,17 @@ public class NPC : MonoBehaviour, INPC {
 	private int kapazitaet = 250;
 	[SerializeField]
 	private int trageStatus = 0;
-	//NPC versuch immer den Target Vector zu erreichen
 	[SerializeField]
 	private Vector3 targetPosition = Vector3.zero;
 
 
 	void Start () {
-		//nächst besten freien job suchen/nehmen
 		bool jobSearchResult = Jobsuche ();
 		if (!jobSearchResult) {
 			StartCoroutine(JobDelay(jobSuchZyklusZeit));
 		}
-		//bevölkerungszähler erhöhen und NPC nummerieren
 		citizenCounter ++;
 		citizenID = citizenCounter;
-		//bei DBCharsAndBuildings anmelden:
 		DBCharsAndBuildings.GetInstance().RegistrationCitizen(this);
 	}
 
@@ -54,23 +46,19 @@ public class NPC : MonoBehaviour, INPC {
 		bool jobGefunden = false;
 		List<IWorkplace> workplaceListe= DBCharsAndBuildings.GetInstance().GetWorkplaces();
 		Debug.Log("Suche Job");
-		//mit for-schleife liste nach job durchsuchen
 		foreach (IWorkplace workplace in workplaceListe) {
 			if(workplace.GetMaxPlätze() > workplace.GetPlätzeBelegt()){
 				Debug.Log(workplace);
 				job = workplace.GetJobType();
-				//Koordinaten des Arbeitsplatzes!!
 				arbeitsplatz = ((IBuilding)workplace).GetTransform();
 				targetPosition = arbeitsplatz.position;
 				//TODO navMesh Movement mit targetPosition
 				jobGefunden=true;
 				jobIdleTrigger = false;
-				//arbeiter bei arbeitgeber anmelden:
 				workplace.MeldeArbeiter(this);
 				break;
 			}
 		}
-		//wenn kein Job = return false mit idle im ausrufer
 		return jobGefunden;
 	}
 
