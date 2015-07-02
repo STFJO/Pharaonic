@@ -1,47 +1,28 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Weizenfarm : MonoBehaviour, IBuilding
+public class Weizenfarm : Workplace
 {
 	[SerializeField]
-	private int Weizenvorrat = 10000;
-	[SerializeField]
-	private int DelayForGivingRessources = 30;
+	private float delayTime = 30f;
 
-
-	
-	public Gebäudetyp GetTyp()
-	{
-		return Gebäudetyp.Weizenfarm;
+	void Start(){
+		base.gebäudeart = Gebäudetyp.Weizenfarm; 
 	}
-	
+	//Gibt dem Npc in einem bestimmten Zeitabstand Ressourcen wenn er sich in unmittelbarer Nähe befindet
 	void OnTriggerEnter (Collider other) 
 	{
-		NPC isIt = other.gameObject.GetComponent <NPC>;
+		NPC isIt = other.gameObject.GetComponent <NPC>();
 		if (isIt != null) {
-			GiveRessourceToPlayer (isIt);
+			ArbeiterAnwesend(isIt);
+			StartCoroutine(RessourceGiver(delayTime,isIt,RessourceType.Nahrung));
 		}
+	}
+
+	void OnTriggerExit (Collider other){
+		NPC isExit = other.gameObject.GetComponent<NPC> ();
+		ArbeiterAbwesend (isExit);
 	}
 	
-	public Transform GetTransform ()
-	{
-		return transform;
-	}
-
-	private void GiveRessourceToPlayer(NPC Ziel)
-	{
-		while(Ziel.SetWeizenTragend(10))
-		{
-			Weizenvorrat = Weizenvorrat-10;
-			StartCoroutine(Delay (DelayForGivingRessources));
-		}
-			               
-		Ziel.SetTarget(DBCharsAndBuildings.FindeZielGebäude(Lagerhaus, Ziel.transform));
-			               
-	}
-
-			            
-  	IEnumerator Delay (float time){
-		yield return new WaitForSeconds (time);
-	}
 }

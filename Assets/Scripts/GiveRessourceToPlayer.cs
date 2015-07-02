@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/*
 public class A : MonoBehaviour {
 	
 	public uint wmStart =5000;
@@ -64,3 +64,4 @@ public class A : MonoBehaviour {
 
 
 }
+*/

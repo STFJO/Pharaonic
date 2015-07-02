@@ -33,7 +33,7 @@ public class DBCharsAndBuildings {
 
 
 	//Findet alle Gebäude vom gesuchten Datentyp und speichert sie in einer Liste, die sie dann ausgibt
-	private List<IBuilding> FindeGebäude(Gebäudetyp Typ)
+	public List<IBuilding> FindeGebäude(Gebäudetyp Typ)
 	{
 		List<IBuilding> temp = new List<IBuilding> ();
 		foreach (IBuilding building in buildings) {

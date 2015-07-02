@@ -1,18 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class Mine : MonoBehaviour, IBuilding
+public class Mine : Workplace
 {
-	public Gebäudetyp GetTyp()
-	{
-		return Gebäudetyp.Mine;
+
+	void Start(){
+		base.gebäudeart = Gebäudetyp.Mine;
 	}
-	
+	//Gibt dem Npc in einem bestimmten Zeitabstand Ressourcen wenn er sich in unmittelbarer Nähe befindet
 	void OnTriggerEnter (Collider other) 
 	{
-		other.gameObject.GetComponent <GiveRessourceToPlayer>();	
+		NPC isIt = other.gameObject.GetComponent <NPC>();
+		if (isIt != null) {
+			GiveRessourceToPlayer (isIt, RessourceType.Stein);
+		}
+//		other.gameObject.GetComponent <GiveRessourceToPlayer>();	
 	}
-	Gebäudetyp IBuilding.GetBuildingType ()
+	public Gebäudetyp GetBuildingType ()
 	{
 		throw new System.NotImplementedException ();
 	}
