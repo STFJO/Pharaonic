@@ -12,7 +12,7 @@ public class Mine : Workplace
 	{
 		NPC isIt = other.gameObject.GetComponent <NPC>();
 		if (isIt != null) {
-			GiveRessourceToPlayer (isIt, RessourceType.Stein);
+//			GiveRessourceToPlayer (isIt, RessourceType.Stein);
 		}
 //		other.gameObject.GetComponent <GiveRessourceToPlayer>();	
 	}

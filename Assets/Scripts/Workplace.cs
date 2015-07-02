@@ -14,6 +14,7 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 	protected int delayForGivingRessources = 30;
 	protected int maxPlätze;
 	protected List<NPC> gemeldeteArbeiter = new List<NPC>();
+	protected List<NPC> anwesendeArbeiter = new List<NPC>();
 
 	
 
@@ -41,19 +42,28 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 		}
 	}
 
+	public void ArbeiterAnwesend(NPC anwesend){
+		anwesendeArbeiter.Add (anwesend);
+	}
+	public void ArbeiterAbwesend(NPC abwesend){
+		anwesendeArbeiter.Remove (abwesend);
+	}
+	               
 
-	public void GiveRessourceToPlayer(NPC Ziel, RessourceType Ressource)
+	public IEnumerator RessourceGiver (float pTime,NPC pZiel,RessourceType pRessource)
 	{
-		while(Ziel.AddTragend(10, Ressource) && gemeldeteArbeiter.Contains(Ziel))
-		{
-			ressourcenVorrat = ressourcenVorrat - 10;
-			StartCoroutine(Delay (delayForGivingRessources));
+		while(anwesendeArbeiter.Contains(pZiel)&& gemeldeteArbeiter.Contains(pZiel)) {
+			if (pZiel.AddTragend (10, pRessource)) {
+				ressourcenVorrat = ressourcenVorrat - 10;
+			}
+			else{
+				break;
+			}
+			yield return new WaitForSeconds (pTime);
 		}
-			               
-		Ziel.SetTargetPosition((DBCharsAndBuildings.GetInstance().FindeZielGebäude(Gebäudetyp.Lager, Ziel.transform)).GetTransform().position);
-			               
-	}	               
-	
+		pZiel.SetTargetPosition((DBCharsAndBuildings.GetInstance().FindeZielGebäude(Gebäudetyp.Lager, pZiel.transform)).GetTransform().position);
+	}
+
 
 	//Its so obvious
 	public Gebäudetyp GetTyp()
@@ -66,17 +76,6 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 	public Transform GetTransform ()
 	{
 		return transform;
-	}
-	
-
-	IEnumerator Delay (float time)
-	{
-		yield return new WaitForSeconds (time);
-	}
-
-	public void GiveRessourceToPlayer (INPC Ziel)
-	{
-		throw new System.NotImplementedException ();
 	}
 
 	public Gebäudetyp GetBuildingType ()
@@ -99,10 +98,6 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 		throw new System.NotImplementedException ();
 	}
 
-	public void GiveRessourceToPlayer ()
-	{
-		throw new System.NotImplementedException ();
-	}
 
 	public Gebäudetyp GetJobType ()
 	{
