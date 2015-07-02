@@ -30,7 +30,15 @@ public class DBCharsAndBuildings {
 		return self;
 	}
 
-
+	public void RegistrationBuilding(IBuilding building){
+		AddGebäude (building);
+		if (building.GetType() == typeof(IWorkplace)) {
+			AddWorkplace(building);
+		}
+	}
+	public void RegistrationCitizen(INPC npc){
+		AddNpc (npc);
+	}
 
 	//Findet alle Gebäude vom gesuchten Datentyp und speichert sie in einer Liste, die sie dann ausgibt
 	public List<IBuilding> FindeGebäude(Gebäudetyp Typ)
@@ -73,17 +81,17 @@ public class DBCharsAndBuildings {
 
 
 	//Selbsterklärend
-	public void AddGebäude(IBuilding gebäude)
+	private void AddGebäude(IBuilding gebäude)
 	{
 		buildings.Add(gebäude);
 	}
 
-	public void AddNpc(INPC Npc)
+	private void AddNpc(INPC Npc)
 	{
 		npcs.Add (Npc);
 	}
 
-	public void AddWorkplace(IWorkplace Arbeitsplatz)
+	private void AddWorkplace(IWorkplace Arbeitsplatz)
 	{
 		arbeitsplätze.Add (Arbeitsplatz);
 	}
