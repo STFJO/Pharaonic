@@ -8,6 +8,7 @@ public class NPC : MonoBehaviour, INPC {
 	[SerializeField]
 	private Gebäudetyp job;
 	private Transform arbeitsplatz;
+	private Transform wohnhaus;
 	//Nummerierung der NPCs
 	[SerializeField]
 	private static int citizenCounter = 0;
@@ -88,7 +89,9 @@ public class NPC : MonoBehaviour, INPC {
 		targetPosition = newTargetPosition;
 	}
 
-
+	public void SetWohnhausTransform(Transform pWohnhaus){
+		wohnhaus = pWohnhaus;
+	}
 
 
 
@@ -126,10 +129,4 @@ public class NPC : MonoBehaviour, INPC {
 		return erfolg;
 	}
 
-
-
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
