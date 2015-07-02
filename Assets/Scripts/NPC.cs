@@ -64,7 +64,7 @@ public class NPC : MonoBehaviour, INPC {
 		return jobGefunden;
 	}
 
-	void Kuendigen(){
+	public void Kuendigen(){
 		jobIdleTrigger = true;
 		job = Gebäudetyp.None;
 		arbeitsplatz = null;
@@ -110,13 +110,13 @@ public class NPC : MonoBehaviour, INPC {
 	public bool AddTragend(int neuDazu, RessourceType ressource){
 		bool erfolg = false;
 		if ((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0) {
-			if(RessourceType.Holz){
+			if(RessourceType.Holz== ressource){
 				holzTragend += neuDazu;
 			}
-			if(RessourceType.Stein){
+			if(RessourceType.Stein== ressource){
 				steinTragend += neuDazu;
 			}
-			if(RessourceType.Nahrung){
+			if(RessourceType.Nahrung== ressource){
 				nahrungTragend += neuDazu;
 			}
 			trageStatus += neuDazu;

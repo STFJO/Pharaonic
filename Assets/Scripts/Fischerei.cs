@@ -1,25 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fischerei : MonoBehaviour, IBuilding
+
+/// <summary>
+/// TODO Komplett überarbeiten
+/// </summary>
+public class Fischerei : Workplace
 {
-    public Gebäudetyp GetTyp()
+	void Start(){
+		base.gebäudeart = Gebäudetyp.Fischerei;
+	}
+
+    
+	public Gebäudetyp GetTyp()
     {
         return Gebäudetyp.Fischerei;
     }
 
     void OnTriggerEnter (Collider other) 
     {
-		other.gameObject.GetComponent <GiveRessourceToPlayer>();	
+//		other.gameObject.GetComponent <GiveRessourceToPlayer>();	
 	}
 
-	Gebäudetyp IBuilding.GetBuildingType ()
+	public Gebäudetyp GetBuildingType ()
 	{
 		throw new System.NotImplementedException ();
 	}
 
 	public Transform GetTransform ()
 	{
-		throw new System.NotImplementedException ();
+		return transform;
+//		NPC isIt = other.gameObject.GetComponent <NPC>();
+//		if (isIt != null) {
+//			GiveRessourceToPlayer (isIt, RessourceType.Nahrung);
+//		}
 	}
 }
