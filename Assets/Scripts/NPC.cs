@@ -8,6 +8,7 @@ public class NPC : MonoBehaviour, INPC {
 	[SerializeField]
 	private Gebäudetyp job;
 	private Transform arbeitsplatz;
+	private Transform wohnhaus;
 	//Nummerierung der NPCs
 	[SerializeField]
 	private static int citizenCounter = 0;
