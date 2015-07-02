@@ -8,7 +8,8 @@ public class Weizenfarm : Workplace
 	private float delayTime = 30f;
 
 	void Start(){
-		base.gebäudeart = Gebäudetyp.Weizenfarm; 
+		base.gebäudeart = Gebäudetyp.Weizenfarm;
+		DBCharsAndBuildings.GetInstance ().RegistrationBuilding (this);
 	}
 	//Gibt dem Npc in einem bestimmten Zeitabstand Ressourcen wenn er sich in unmittelbarer Nähe befindet
 	void OnTriggerEnter (Collider other) 

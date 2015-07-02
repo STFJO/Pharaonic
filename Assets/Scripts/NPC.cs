@@ -39,7 +39,7 @@ public class NPC : MonoBehaviour, INPC {
 		citizenCounter ++;
 		citizenID = citizenCounter;
 		//bei DBCharsAndBuildings anmelden:
-		DBCharsAndBuildings.GetInstance().AddNpc (this);
+		DBCharsAndBuildings.GetInstance().RegistrationCitizen(this);
 	}
 
 	bool Jobsuche(){
