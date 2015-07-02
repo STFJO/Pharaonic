@@ -32,8 +32,9 @@ public class DBCharsAndBuildings {
 
 	public void RegistrationBuilding(IBuilding building){
 		AddGebäude (building);
-		if (building.GetType() == typeof(IWorkplace)) {
-			AddWorkplace(building);
+		IWorkplace wp = building as IWorkplace;
+		if (wp != null) {
+			AddWorkplace(wp);
 		}
 	}
 	public void RegistrationCitizen(INPC npc){
