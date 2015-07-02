@@ -93,7 +93,9 @@ public class NPC : MonoBehaviour, INPC {
 		wohnhaus = pWohnhaus;
 	}
 
-
+	public Transform GetArbeitsplatz(){
+		return arbeitsplatz;
+	}
 
 
 

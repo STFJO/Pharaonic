@@ -10,8 +10,6 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 	protected Gebäudetyp gebäudeart;
 	[SerializeField]
 	protected int ressourcenVorrat = 10000;
-	[SerializeField]
-	protected int delayForGivingRessources = 30;
 	protected int maxPlätze;
 	protected List<NPC> gemeldeteArbeiter = new List<NPC>();
 	protected List<NPC> anwesendeArbeiter = new List<NPC>();
