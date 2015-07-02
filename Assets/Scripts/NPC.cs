@@ -45,6 +45,7 @@ public class NPC : MonoBehaviour, INPC {
 		List<IWorkplace> workplaceListe = DBCharsAndBuildings.GetInstance().GetWorkplaces();
 		Debug.Log("Suche Job");
 		foreach(IWorkplace workplace in workplaceListe){
+			//Wenn Platz vorhanden wird Platz belegt
 			if(workplace.GetMaxPlätze() > workplace.GetPlätzeBelegt()){
 				Debug.Log(workplace);
 				job = workplace.GetJobType();
