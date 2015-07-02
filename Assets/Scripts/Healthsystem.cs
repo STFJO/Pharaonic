@@ -7,7 +7,6 @@ public class Healthsystem : MonoBehaviour {
 	public double hunger;
 	public double health;
 	public bool hungersnot = false;
-	private Vector3 targetPosition = Vector3.zero;
 
 
 
@@ -28,7 +27,9 @@ public class Healthsystem : MonoBehaviour {
 		hunger = hunger + 0.01334;
 
 		if (hunger == 80) {
-			DBCharsAndBuildings.FindeZielGebäude(Gebäudetyp.Lager, transform);
+			IBuilding nextLager = DBCharsAndBuildings.GetInstance().FindeZielGebäude(Gebäudetyp.Lager, transform);
+			lager = nextLager.GetTransform();
+			gameObject.GetComponent<NPC>().SetTargetPosition(lager.transform.position);
 			hungersnot = true;  //geht zum Lagerhaus
 		}
 
