@@ -43,7 +43,6 @@ public class NPC : MonoBehaviour, INPC {
 	}
 
 	bool Jobsuche(){
-		bool jobGefunden = false;
 		List<IWorkplace> workplaceListe= DBCharsAndBuildings.GetInstance().GetWorkplaces();
 		Debug.Log("Suche Job");
 		foreach (IWorkplace workplace in workplaceListe) {
@@ -53,13 +52,12 @@ public class NPC : MonoBehaviour, INPC {
 				arbeitsplatz = ((IBuilding)workplace).GetTransform();
 				targetPosition = arbeitsplatz.position;
 				//TODO navMesh Movement mit targetPosition
-				jobGefunden=true;
 				jobIdleTrigger = false;
 				workplace.MeldeArbeiter(this);
-				break;
+				return true;
 			}
 		}
-		return jobGefunden;
+		return false;
 	}
 
 	public void Kuendigen(){
@@ -81,35 +79,6 @@ public class NPC : MonoBehaviour, INPC {
 
 	}
 
-	//TODO targetPosition setzung regeln 
-	public void SetTargetPosition(Vector3 newTargetPosition){
-		targetPosition = newTargetPosition;
-	}
-
-	public void SetWohnhausTransform(Transform pWohnhaus){
-		wohnhaus = pWohnhaus;
-	}
-
-	public Transform GetArbeitsplatz(){
-		return arbeitsplatz;
-	}
-
-
-
-
-
-	public int GetHolzTragend(){
-		return holzTragend;
-	}
-	public int GetSteinTragend(){
-		return steinTragend;
-	}
-	public int GetNahrungTragend(){
-		return nahrungTragend;
-	}
-
-
-
 	public bool AddTragend(int neuDazu, RessourceType ressource){
 		bool erfolg = false;
 		if ((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0) {
@@ -127,5 +96,32 @@ public class NPC : MonoBehaviour, INPC {
 		}
 		return erfolg;
 	}
+
+	//TODO targetPosition setzung regeln 
+	public void SetTargetPosition(Vector3 newTargetPosition){
+		targetPosition = newTargetPosition;
+	}
+	
+	public void SetWohnhausTransform(Transform pWohnhaus){
+		wohnhaus = pWohnhaus;
+	}
+	
+	public Transform GetArbeitsplatz(){
+		return arbeitsplatz;
+	}
+
+	public int GetHolzTragend(){
+		return holzTragend;
+	}
+
+	public int GetSteinTragend(){
+		return steinTragend;
+	}
+
+	public int GetNahrungTragend(){
+		return nahrungTragend;
+	}
+	
+
 
 }
