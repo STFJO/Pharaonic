@@ -9,24 +9,29 @@ public class Apartement : MonoBehaviour {
 	private List<NPC> inhabitants;
 	private float spawnDelayTime = 30;
 	public GameObject worker;
+	private bool isSpawning = false;
 
-	// Use this for initialization
 	void Start(){
 		inhabitants = new List<NPC> ();
 		typeOfBuilding = Buildingtype.Apartement;
 		StartCoroutine(SpawnDelay(spawnDelayTime));
 	}
-	
-	// Update is called once per frame
-	void Update(){
-		
+
+	void FixedUpdate(){
+		if (maxSpace > inhabitants.Count && !isSpawning){
+			StartCoroutine(SpawnDelay(spawnDelayTime));
+		}
 	}
 	
 	IEnumerator SpawnDelay(float delayTime){
 		while (maxSpace > inhabitants.Count) {
-			NPC newInhab = (NPC) Instantiate(worker, transform.position, transform.rotation);
-			inhabitants.Add(newInhab);
+			isSpawning = true;
+			GameObject newInhab = (GameObject)Instantiate(worker, transform.position, transform.rotation);
+			int number = newInhab.GetComponent<NPC>().GetCitizenID();
+			newInhab.name = "Citizen Nr."+number;
+			inhabitants.Add(newInhab.GetComponent<NPC>());
 			yield return new WaitForSeconds(delayTime);
 		}
+		isSpawning = false;
 	}
 }
