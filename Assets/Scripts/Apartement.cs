@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class Apartement : MonoBehaviour {
 
 	private Buildingtype typeOfBuilding;
+	[SerializeField]
 	private int maxSpace = 4;
 	private List<NPC> inhabitants;
+	[SerializeField]
 	private float spawnDelayTime = 30;
 	public GameObject worker;
 	private bool isSpawning = false;
