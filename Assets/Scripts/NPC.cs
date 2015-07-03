@@ -100,7 +100,7 @@ public class NPC : MonoBehaviour, INPC {
 	}
 
 	public float GetCurrentHunger(){
-		return work.GetTotalValue ();
+		return hunger.GetTotalValue();
 	}
 
 	public void SetHomeTransform(Transform pHome){
