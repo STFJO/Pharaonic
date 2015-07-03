@@ -53,4 +53,7 @@ public class NPCAI : MonoBehaviour {
 	public List<AbstractDesire> GetDesires(){
 		return new List<AbstractDesire>(desires);
 	}
+	public Transform GetCurrentTarget(){
+		return currentTarget;
+	}
 }

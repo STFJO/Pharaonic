@@ -29,11 +29,12 @@ public class NPC : MonoBehaviour, INPC {
 	[SerializeField]
 	private int cargoStatus = 0;
 	private WorkDesire work;
-	private Hunger hunger;
+//	private Hunger hunger;
 
 	void Start(){
 		work = new WorkDesire(GetComponent<NPCAI>(),this);
-		hunger = new Hunger();
+		GetComponent<NPCAI>().AddDesire(work);
+//		hunger = new Hunger();
 		bool jobSearchResult = Jobsearch ();
 		if(!jobSearchResult){
 			StartCoroutine(JobDelay(jobSearchZyclusTime));
@@ -52,7 +53,6 @@ public class NPC : MonoBehaviour, INPC {
 				job = workplace.GetJobType();
 				hisWorkplace = ((IBuilding)workplace).GetTransform();
 				work.SetWorkplacePosition(hisWorkplace);
-				//TODO navMesh Movement mit targetPosition
 				jobIdleTrigger = false;
 				workplace.RegistrationWorker(this);
 				return true;
