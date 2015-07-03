@@ -8,30 +8,29 @@ public class Mine : Workplace
 	private float delayTime = 30f;
 
 	void Start(){
-		base.gebäudeart = Gebäudetyp.Mine;
-		DBCharsAndBuildings.GetInstance ().RegistrationBuilding (this);
+		base.typeOfBuilding = Buildingtype.Mine;
+		DBCharsAndBuildings.GetInstance().RegistrationBuilding(this);
 	}
 	//Gibt dem Npc in einem bestimmten Zeitabstand Ressourcen wenn er sich in unmittelbarer Nähe befindet
-	void OnTriggerEnter (Collider other) 
-	{
-		NPC isIt = other.gameObject.GetComponent <NPC>();
-		if (isIt != null) {
-			ArbeiterAnwesend(isIt);
-			StartCoroutine(RessourceGiver(delayTime,isIt,RessourceType.Stein));
+	void OnTriggerEnter(Collider other){
+		NPC isEnter = other.gameObject.GetComponent <NPC>();
+		if (isEnter != null){
+			WorkerPresent(isEnter);
+			StartCoroutine(RessourceGiver(delayTime,isEnter,RessourceType.STONE));
 		}
 	}
 
-	void OnTriggerExit (Collider other){
-		NPC isExit = other.gameObject.GetComponent<NPC> ();
-		ArbeiterAbwesend (isExit);
+	void OnTriggerExit(Collider other){
+		NPC isExit = other.gameObject.GetComponent<NPC>();
+		WorkerAbsent(isExit);
 	}
 
-	public Gebäudetyp GetBuildingType ()
+	public Buildingtype GetBuildingType()
 	{
 		throw new System.NotImplementedException ();
 	}
 	
-	public Transform GetTransform ()
+	public Transform GetTransform()
 	{
 		throw new System.NotImplementedException ();
 	}

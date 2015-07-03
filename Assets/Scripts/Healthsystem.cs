@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Healthsystem : MonoBehaviour {
@@ -7,6 +7,8 @@ public class Healthsystem : MonoBehaviour {
 	public double hunger;
 	public double health;
 	public bool hungersnot = false;
+	[SerializeField]
+	private double hungerMultiplikator = 0.01334;
 
 
 
@@ -24,17 +26,17 @@ public class Healthsystem : MonoBehaviour {
 	void FixedUpdate() {
 
 		if(hunger<100)
-		hunger = hunger + 0.01334;
+		hunger = hunger + hungerMultiplikator; //war 0,01334
 
-		if (hunger == 80) {
-			IBuilding nextLager = DBCharsAndBuildings.GetInstance().FindeZielGebäude(Gebäudetyp.Lager, transform);
-			lager = nextLager.GetTransform();
-			gameObject.GetComponent<NPC>().SetTargetPosition(lager.transform.position);
+		if (hunger >= 80 && !hungersnot) {
+			Debug.Log("Over 80");
+			lager = DBCharsAndBuildings.GetInstance().FindClosestTargetBuilding(Buildingtype.Storage, transform);
+			//gameObject.GetComponent<NPC>().SetTargetPosition(lager.transform.position);
 			hungersnot = true;  //geht zum Lagerhaus
 		}
 
-		if (hunger == 100 && health > 0) {
-			health = health - 0.01334;  //beginnt zu sterben
+		if (hunger >= 100 && health > 0) {
+			health = health - hungerMultiplikator;  //beginnt zu sterben
 		}
 		if (health <= 0) {
 			Destroy (gameObject);     //stirbt

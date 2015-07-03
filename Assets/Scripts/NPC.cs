@@ -2,133 +2,132 @@
 using System.Collections.Generic;
 using System.Collections;
 
+
+[RequireComponent (typeof (NavMeshAgent))]
+[RequireComponent (typeof (Collider))]
 public class NPC : MonoBehaviour, INPC {
 
-	//Art und Koordinaten seines Arbeitsplatzes
 	[SerializeField]
-	private Gebäudetyp job;
-	private Transform arbeitsplatz;
-	private Transform wohnhaus;
-	//Nummerierung der NPCs
+	private Buildingtype job = Buildingtype.None;
+	private Transform hisWorkplace;
+	private Transform home;
 	[SerializeField]
-	private static int citizenCounter = 0;
+	private static int citizenCounter =0;
 	private int citizenID;
-	//Jobsuche
 	private Coroutine jobIdle;
 	private bool jobIdleTrigger = true;
 	[SerializeField]
-	private float jobSuchZyklusZeit = 5;
-	//Ressourcen Verwaltung innerhalb des NPCs
-	private int holzTragend = 0;
-	private int steinTragend = 0;
-	private int nahrungTragend = 0;
+	private float jobSearchZyclusTime = 5;
 	[SerializeField]
-	private int kapazitaet = 250;
-	private int trageStatus = 0;
-	//NPC versuch immer den Target Vector zu erreichen
+	private int woodCargo = 0;
 	[SerializeField]
-	private Vector3 targetPosition = Vector3.zero;
+	private int stoneCargo = 0;
+	[SerializeField]
+	private int foodCargo = 0;
+	[SerializeField]
+	private int capacity = 250;
+	[SerializeField]
+	private int cargoStatus = 0;
+	private WorkDesire work;
+	private Hunger hunger;
 
-
-	void Start () {
-		//nächst besten freien job suchen/nehmen
-		bool jobSearchResult = Jobsuche ();
-		if (!jobSearchResult) {
-			StartCoroutine(JobDelay(jobSuchZyklusZeit));
+	void Start(){
+		work = new WorkDesire(GetComponent<NPCAI>(),this);
+		hunger = new Hunger();
+		bool jobSearchResult = Jobsearch ();
+		if(!jobSearchResult){
+			StartCoroutine(JobDelay(jobSearchZyclusTime));
 		}
-		//bevölkerungszähler erhöhen und NPC nummerieren
 		citizenCounter ++;
 		citizenID = citizenCounter;
-		//bei DBCharsAndBuildings anmelden:
 		DBCharsAndBuildings.GetInstance().RegistrationCitizen(this);
 	}
 
-	bool Jobsuche(){
-		bool jobGefunden = false;
-		List<IWorkplace> workplaceListe= DBCharsAndBuildings.GetInstance().GetWorkplaces();
-		//mit for-schleife liste nach job durchsuchen
-		foreach (IWorkplace workplace in workplaceListe) {
-			if(workplace.GetMaxPlätze() > workplace.GetPlätzeBelegt()){
+	bool Jobsearch(){
+		List<IWorkplace> workplaceListe = DBCharsAndBuildings.GetInstance().GetWorkplaces();
+		Debug.Log("Suche Job");
+		foreach(IWorkplace workplace in workplaceListe){
+			if(workplace.HasJobsLeft()){
+				Debug.Log(workplace);
 				job = workplace.GetJobType();
-				//Koordinaten des Arbeitsplatzes!!
-				arbeitsplatz = ((IBuilding)workplace).GetTransform();
-				targetPosition = arbeitsplatz.position;
+				hisWorkplace = ((IBuilding)workplace).GetTransform();
+				work.SetWorkplacePosition(hisWorkplace);
 				//TODO navMesh Movement mit targetPosition
-				jobGefunden=true;
 				jobIdleTrigger = false;
-				//arbeiter bei arbeitgeber anmelden:
-				workplace.MeldeArbeiter(this);
-				break;
+				workplace.RegistrationWorker(this);
+				return true;
 			}
 		}
-		//wenn kein Job = return false mit idle im ausrufer
-		return jobGefunden;
+		return false;
 	}
 
-	public void Kuendigen(){
-		targetPosition = Vector3.zero;
+	public void Dismiss(){
 		jobIdleTrigger = true;
-		job = Gebäudetyp.None;
-		arbeitsplatz = null;
-		bool jobSearchResult = Jobsuche ();
-		if (!jobSearchResult) {
-			StartCoroutine(JobDelay(jobSuchZyklusZeit));
+		job = Buildingtype.None;
+		hisWorkplace = null;
+		bool jobSearchResult = Jobsearch();
+		if(!jobSearchResult){
+			StartCoroutine(JobDelay(jobSearchZyclusTime));
 		}
 	}
 
 	IEnumerator JobDelay(float time){
-		while (jobIdleTrigger) {
-			yield return new WaitForSeconds (time);
-			Jobsuche();
+		while(jobIdleTrigger){
+			yield return new WaitForSeconds(time);
+			Jobsearch();
 		}
-
 	}
 
-	//TODO targetPosition setzung regeln 
-	public void SetTargetPosition(Vector3 newTargetPosition){
-		targetPosition = newTargetPosition;
-	}
-
-	public void SetWohnhausTransform(Transform pWohnhaus){
-		wohnhaus = pWohnhaus;
-	}
-
-	public Transform GetArbeitsplatz(){
-		return arbeitsplatz;
-	}
-
-
-
-
-
-	public int GetHolzTragend(){
-		return holzTragend;
-	}
-	public int GetSteinTragend(){
-		return steinTragend;
-	}
-	public int GetNahrungTragend(){
-		return nahrungTragend;
-	}
-
-
-
-	public bool AddTragend(int neuDazu, RessourceType ressource){
-		bool erfolg = false;
-		if ((trageStatus + neuDazu) <= kapazitaet && (trageStatus + neuDazu) >= 0) {
-			if(RessourceType.Holz== ressource){
-				holzTragend += neuDazu;
+	public bool AddCargo(int newToAdd, RessourceType ressource){
+		if((cargoStatus + newToAdd) <= capacity && (cargoStatus + newToAdd) >= 0){
+			if(RessourceType.WOOD == ressource){
+				woodCargo += newToAdd;
+				cargoStatus += newToAdd;
+				return true;
 			}
-			if(RessourceType.Stein== ressource){
-				steinTragend += neuDazu;
+			if(RessourceType.STONE == ressource){
+				stoneCargo += newToAdd;
+				cargoStatus += newToAdd;
+				return true;
 			}
-			if(RessourceType.Nahrung== ressource){
-				nahrungTragend += neuDazu;
+			if(RessourceType.FOOD == ressource){
+				foodCargo += newToAdd;
+				cargoStatus += newToAdd;
+				return true;
 			}
-			trageStatus += neuDazu;
-			erfolg = true;
 		}
-		return erfolg;
+		return false;
 	}
 
+	public float GetCurrentHunger(){
+		return work.GetTotalValue ();
+	}
+
+	public void SetHomeTransform(Transform pHome){
+		home = pHome;
+	}
+	
+	public Transform GetWorkplace(){
+		return hisWorkplace;
+	}
+
+	public int GetWoodCargo(){
+		return woodCargo;
+	}
+
+	public int GetStoneCargo(){
+		return stoneCargo;
+	}
+
+	public int GetFoodCargo(){
+		return foodCargo;
+	}
+
+	public int GetCargoStatus(){
+		return cargoStatus;
+	}
+
+	public int GetCargoCapacity(){
+		return capacity;
+	}
 }
