@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent (typeof (NPC))]
+[RequireComponent (typeof (NavMeshAgent))]
 public class NPCAI : MonoBehaviour {
 
 	private List<AbstractDesire> desires;
@@ -10,6 +12,7 @@ public class NPCAI : MonoBehaviour {
 	private bool alive=true;
 	private bool needsUpdate=false;
 	public float tickTime=5;
+	private NavMeshAgent nav;
 	// Use this for initialization
 	void Awake () {
 		desires = new List<AbstractDesire>();
@@ -18,6 +21,7 @@ public class NPCAI : MonoBehaviour {
 
 	void Start(){
 		StartCoroutine(AITickDelay());
+		nav = GetComponent<NavMeshAgent>();
 	}
 	
 	// Update is called once per frame
@@ -28,6 +32,7 @@ public class NPCAI : MonoBehaviour {
 		if(needsUpdate){
 			desires.Sort(comparer);
 			currentTarget = desires[0].SearchWayToSatisfy();
+			nav.destination = currentTarget.position;
 			needsUpdate=false;
 		}
 	}
@@ -37,5 +42,15 @@ public class NPCAI : MonoBehaviour {
 			yield return new WaitForSeconds(tickTime);
 			needsUpdate=alive;
 		}
+	}
+
+	public void AddDesire(AbstractDesire desire){
+		desires.Add(desire);
+	}
+	public void RemoveDesire(AbstractDesire desire){
+		desires.Remove(desire);
+	}
+	public List<AbstractDesire> GetDesires(){
+		return new List<AbstractDesire>(desires);
 	}
 }
