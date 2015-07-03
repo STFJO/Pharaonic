@@ -99,14 +99,18 @@ public class NPC : MonoBehaviour, INPC {
 		return false;
 	}
 
-	public float GetCurrentHunger(){
+	/*public float GetCurrentHunger(){
 		return hunger.GetTotalValue();
-	}
+	}*/
 
 	public void SetHomeTransform(Transform pHome){
 		home = pHome;
 	}
-	
+
+	public int GetCitizenID(){
+		return citizenID;
+	}
+
 	public Transform GetWorkplace(){
 		return hisWorkplace;
 	}
