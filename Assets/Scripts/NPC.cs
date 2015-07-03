@@ -32,6 +32,7 @@ public class NPC : MonoBehaviour, INPC {
 
 	void Start(){
 		work = new WorkDesire(GetComponent<NPCAI>(),this);
+		GetComponent<NPCAI>().AddDesire(work);
 		bool jobSearchResult = Jobsearch ();
 		if(!jobSearchResult){
 			StartCoroutine(JobDelay(jobSearchZyclusTime));
@@ -50,7 +51,6 @@ public class NPC : MonoBehaviour, INPC {
 				job = workplace.GetJobType();
 				hisWorkplace = ((IBuilding)workplace).GetTransform();
 				work.SetWorkplacePosition(hisWorkplace);
-				//TODO navMesh Movement mit targetPosition
 				jobIdleTrigger = false;
 				workplace.RegistrationWorker(this);
 				return true;
