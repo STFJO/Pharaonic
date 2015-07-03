@@ -19,7 +19,10 @@ public class WorkDesire : AbstractDesire {
 
 	public override Transform SearchWayToSatisfy(){
 		if(myMaster.GetCargoStatus() >= myMaster.GetCargoCapacity()){
-			return DBCharsAndBuildings.GetInstance().FindClosestTargetBuilding(Buildingtype.Storage, myMaster.transform);
+			Transform storage = DBCharsAndBuildings.GetInstance().FindClosestTargetBuilding(Buildingtype.Storage, myMaster.transform);
+			if(storage != null){
+				return storage;
+			}
 		}
 		return workplaceTransform;
 	}
