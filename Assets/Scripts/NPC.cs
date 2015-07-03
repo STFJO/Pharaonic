@@ -29,10 +29,15 @@ public class NPC : MonoBehaviour, INPC {
 	[SerializeField]
 	private int cargoStatus = 0;
 	private WorkDesire work;
+	private Hunger hunger;
 
 	void Start(){
 		work = new WorkDesire(GetComponent<NPCAI>(),this);
+<<<<<<< HEAD
 		GetComponent<NPCAI>().AddDesire(work);
+=======
+		hunger = new Hunger();
+>>>>>>> 9729f2c75951ad46e85ee4a91e587870c81a8516
 		bool jobSearchResult = Jobsearch ();
 		if(!jobSearchResult){
 			StartCoroutine(JobDelay(jobSearchZyclusTime));
@@ -96,7 +101,11 @@ public class NPC : MonoBehaviour, INPC {
 		}
 		return false;
 	}
-	
+
+	public float GetCurrentHunger(){
+		return work.GetTotalValue ();
+	}
+
 	public void SetHomeTransform(Transform pHome){
 		home = pHome;
 	}
