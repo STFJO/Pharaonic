@@ -52,7 +52,7 @@ public class DBCharsAndBuildings {
 	}
 
 	//Gibt einem Npc das gewünschte Gebäude mit der kürzesten Entfernung zurück
-	public IBuilding FindClosestTargetBuilding(Buildingtype Typus, Transform NpcPosition){
+	public Transform FindClosestTargetBuilding(Buildingtype Typus, Transform NpcPosition){
 		int index = 0;
 		float distance = float.PositiveInfinity;
 		List<IBuilding> possibles = FindBuilding(Typus);
@@ -62,7 +62,7 @@ public class DBCharsAndBuildings {
 				distance = CalculateDistance(NpcPosition, possibles [i].GetTransform());
 			}
 		}
-		return possibles [index];
+		return possibles [index].GetTransform();
 	}
 
 	private void AddBuilding(IBuilding pBuilding){

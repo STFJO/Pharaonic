@@ -53,7 +53,6 @@ public class Workplace : MonoBehaviour, IBuilding, IWorkplace
 			}
 			yield return new WaitForSeconds(pTime);
 		}
-		pTarget.SetTargetPosition((DBCharsAndBuildings.GetInstance().FindClosestTargetBuilding(Buildingtype.Storrage, pTarget.transform)).GetTransform().position);
 	}
 
 	public Transform GetTransform(){

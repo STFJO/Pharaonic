@@ -30,9 +30,8 @@ public class Healthsystem : MonoBehaviour {
 
 		if (hunger >= 80 && !hungersnot) {
 			Debug.Log("Over 80");
-			IBuilding nextLager = DBCharsAndBuildings.GetInstance().FindClosestTargetBuilding(Buildingtype.Storrage, transform);
-			lager = nextLager.GetTransform();
-			gameObject.GetComponent<NPC>().SetTargetPosition(lager.transform.position);
+			lager = DBCharsAndBuildings.GetInstance().FindClosestTargetBuilding(Buildingtype.Storage, transform);
+			//gameObject.GetComponent<NPC>().SetTargetPosition(lager.transform.position);
 			hungersnot = true;  //geht zum Lagerhaus
 		}
 

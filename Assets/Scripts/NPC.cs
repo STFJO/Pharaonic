@@ -28,10 +28,10 @@ public class NPC : MonoBehaviour, INPC {
 	private int capacity = 250;
 	[SerializeField]
 	private int cargoStatus = 0;
-	[SerializeField]
-	private Vector3 targetPosition = Vector3.zero;
+	private WorkDesire work;
 
 	void Start(){
+		work = new WorkDesire(GetComponent<NPCAI>(),this);
 		bool jobSearchResult = Jobsearch ();
 		if(!jobSearchResult){
 			StartCoroutine(JobDelay(jobSearchZyclusTime));
@@ -49,7 +49,7 @@ public class NPC : MonoBehaviour, INPC {
 				Debug.Log(workplace);
 				job = workplace.GetJobType();
 				hisWorkplace = ((IBuilding)workplace).GetTransform();
-				targetPosition = hisWorkplace.position;
+				work.SetWorkplacePosition(hisWorkplace);
 				//TODO navMesh Movement mit targetPosition
 				jobIdleTrigger = false;
 				workplace.RegistrationWorker(this);
@@ -60,7 +60,6 @@ public class NPC : MonoBehaviour, INPC {
 	}
 
 	public void Dismiss(){
-		targetPosition = Vector3.zero;
 		jobIdleTrigger = true;
 		job = Buildingtype.None;
 		hisWorkplace = null;
@@ -97,11 +96,6 @@ public class NPC : MonoBehaviour, INPC {
 		}
 		return false;
 	}
-
-	//TODO targetPosition setzung regeln 
-	public void SetTargetPosition(Vector3 newTargetPosition){
-		targetPosition = newTargetPosition;
-	}
 	
 	public void SetHomeTransform(Transform pHome){
 		home = pHome;
@@ -121,5 +115,13 @@ public class NPC : MonoBehaviour, INPC {
 
 	public int GetFoodCargo(){
 		return foodCargo;
+	}
+
+	public int GetCargoStatus(){
+		return cargoStatus;
+	}
+
+	public int GetCargoCapacity(){
+		return capacity;
 	}
 }
