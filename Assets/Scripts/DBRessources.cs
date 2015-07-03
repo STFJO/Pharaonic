@@ -24,7 +24,7 @@ public class DBRessources {
 
 	public int GetValueOf(RessourceType pRessource){
 		int cargoInDB = 0;
-		ressourceStorage.TryGetValue(pRessource, cargoInDB);
+		ressourceStorage.TryGetValue(pRessource, out cargoInDB);
 		return cargoInDB;
 	}
 }
