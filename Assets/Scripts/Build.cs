@@ -38,11 +38,5 @@ public class Build : MonoBehaviour {
 		on = !on;
 		spawnPosition = new Vector3(0,0,0);
 		spawnObject = Instantiate(spawnObjects,spawnPosition,transform.rotation) as GameObject;
-		spawnObject.SetActive(false);
-		Component[] components = spawnObject.GetComponentsInChildren<Component>();
-		foreach(Component component in components){
-			if(!component is MeshRenderer)
-				component.enabled=false;
-		}
 	}
 }
