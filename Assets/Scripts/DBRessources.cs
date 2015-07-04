@@ -19,7 +19,10 @@ public class DBRessources {
 	}
 
 	public void AddRessourceToDB(RessourceType pRessource, int pMass){
-		ressourceStorage.Add(pRessource, pMass);
+		int oldValue=0;
+		if(ressourceStorage.TryGetValue(pRessource, out oldValue))
+			ressourceStorage.Remove(pRessource);
+		ressourceStorage.Add(pRessource, pMass+oldValue);
 	}
 
 	public int GetValueOf(RessourceType pRessource){

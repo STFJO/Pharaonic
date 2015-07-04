@@ -32,6 +32,8 @@ public class NPCAI : MonoBehaviour {
 		if(needsUpdate){
 			desires.Sort(comparer);
 			currentTarget = desires[0].SearchWayToSatisfy();
+			if(currentTarget==null)
+				return;
 			nav.destination = currentTarget.position;
 			needsUpdate=false;
 		}
