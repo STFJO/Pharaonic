@@ -31,6 +31,7 @@ public class Apartement : MonoBehaviour {
 			GameObject newInhab = (GameObject)Instantiate(worker, transform.position, transform.rotation);
 			int number = newInhab.GetComponent<NPC>().GetCitizenID();
 			newInhab.name = "Citizen Nr."+number;
+			newInhab.GetComponent<NPC>().SetHomeTransform(transform);
 			inhabitants.Add(newInhab.GetComponent<NPC>());
 			yield return new WaitForSeconds(delayTime);
 		}

@@ -15,7 +15,10 @@ public class Storage : MonoBehaviour, IBuilding{
 			StoreAll (isIt);
 		}
 	}
-	
+
+	void OnDisable(){
+		DBCharsAndBuildings.GetInstance().DeleteBuilding(this);
+	}
 	
 	public void StoreAll (NPC target)
 	{

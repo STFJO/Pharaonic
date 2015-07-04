@@ -25,6 +25,10 @@ public class Mine : Workplace
 		WorkerAbsent(isExit);
 	}
 
+	void OnDisable(){
+		DBCharsAndBuildings.GetInstance().DeleteBuilding(this);
+	}
+
 	public Buildingtype GetBuildingType()
 	{
 		throw new System.NotImplementedException ();
