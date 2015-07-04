@@ -15,10 +15,7 @@ public class Build : MonoBehaviour {
 			if (Physics.Raycast (Camera.main.ScreenPointToRay (Input.mousePosition),out hit)) {
 				spawnPosition = hit.point;
 			}
-			if (Input.GetAxisRaw ("Mouse ScrollWheel") == -0.1f && Input.GetKey("y")) {
-				spawnObject.transform.Rotate (0,-turnSpeed, 0);
-			}
-			if (Input.GetAxisRaw ("Mouse ScrollWheel") == 0.1f && Input.GetKey("y")) {
+			if (Input.GetKey("y")) {
 				spawnObject.transform.Rotate (0, turnSpeed, 0);
 			}
 			spawnObject.transform.position = spawnPosition;
@@ -28,8 +25,9 @@ public class Build : MonoBehaviour {
 			}
 			if (Input.GetMouseButton(0)) {
 				on = !on;
-				spawnObject.SetActive(true);
-
+				MonoBehaviour[] behaviours= spawnObject.GetComponentsInChildren<MonoBehaviour>();
+				foreach(MonoBehaviour behaviour in behaviours)
+					behaviour.enabled=true;
 			}
 		}
 	}
