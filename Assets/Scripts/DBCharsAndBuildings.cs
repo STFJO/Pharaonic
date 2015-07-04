@@ -35,6 +35,19 @@ public class DBCharsAndBuildings {
 		AddNpc(npc);
 	}
 
+	public void DeleteBuilding(IBuilding building){
+		RemoveBuilding (building);
+		IWorkplace wp = building as IWorkplace;
+		if (wp != null) {
+			RemoveWorkplace(wp);
+		}
+	}
+
+	public void DeleteNPC(INPC npc){
+		RemoveNpc(npc);
+	}
+
+
 	//Findet alle Gebäude vom gesuchten Datentyp und speichert sie in einer Liste, die sie dann ausgibt
 	public List<IBuilding> FindBuilding(Buildingtype type){
 		List<IBuilding> temp = new List<IBuilding>();
@@ -69,12 +82,24 @@ public class DBCharsAndBuildings {
 		buildings.Add(pBuilding);
 	}
 
+	private void RemoveBuilding(IBuilding pBuilding){
+		buildings.Remove(pBuilding);
+	}
+
 	private void AddNpc(INPC pNPC){
 		npcs.Add(pNPC);
 	}
 
+	private void RemoveNpc(INPC pNPC){
+		npcs.Remove (pNPC);
+	}
+
 	private void AddWorkplace(IWorkplace pWorkplace){
 		workplaces.Add(pWorkplace);
+	}
+
+	private void RemoveWorkplace(IWorkplace pWorkplace){
+		workplaces.Remove(pWorkplace);
 	}
 
 	public List<IWorkplace> GetWorkplaces()

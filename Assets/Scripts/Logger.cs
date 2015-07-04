@@ -25,4 +25,8 @@ public class Logger : Workplace
 		NPC isExit = other.gameObject.GetComponent<NPC>();
 		WorkerAbsent(isExit);
 	}
+
+	void OnDisable(){
+		DBCharsAndBuildings.GetInstance().DeleteBuilding(this);
+	}
 }

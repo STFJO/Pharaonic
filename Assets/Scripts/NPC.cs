@@ -107,6 +107,10 @@ public class NPC : MonoBehaviour, INPC {
 		home = pHome;
 	}
 
+	public Transform GetHomeTransform(){
+		return home;
+	}
+
 	public int GetCitizenID(){
 		return citizenID;
 	}
