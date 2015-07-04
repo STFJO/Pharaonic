@@ -36,5 +36,10 @@ public class Build : MonoBehaviour {
 		on = !on;
 		spawnPosition = new Vector3(0,0,0);
 		spawnObject = Instantiate(spawnObjects,spawnPosition,transform.rotation) as GameObject;
+		MonoBehaviour[] behaviours = spawnObject.GetComponentsInChildren<MonoBehaviour>();
+		foreach (MonoBehaviour behaviour in behaviours){
+			if(!behaviour is MeshRenderer)
+				behaviour.enabled=false;
+		}
 	}
 }
